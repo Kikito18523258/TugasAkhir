@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\MataPelajaran;
+use App\KompetensiDasar;
 
 class HomeController extends Controller
 {
