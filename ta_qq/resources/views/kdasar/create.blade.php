@@ -50,7 +50,7 @@ input[type=number] {
                  <input type="number"name="kelas" class="form-control" readonly="" value="{{$k}}">  
             </div> 
         </div>  
-        <button type="submit" class="btn bg-primary" style="color:white;">
+        <button type="submit" class="btn" style="background: #eb6440; color: white;">
             Submit
         </button>
     </form>

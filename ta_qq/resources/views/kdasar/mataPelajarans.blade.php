@@ -8,7 +8,7 @@
             <div class="card-body">
               <h5 class="card-title">{{$sm->nama}}</h5> 
               <p class="card-text"><small class="text-muted">Kelas {{$k}}</small></p>
-              <a href="/kompetensiDasar/{{$k}}/{{$sm->id}}/" class="btn btn-primary">Buka</a>
+              <a href="/kompetensiDasar/{{$k}}/{{$sm->id}}/" class="btn" style="background: #eb6440; color: white;">Buka</a>
             </div>
           </div>
           @endforeach
