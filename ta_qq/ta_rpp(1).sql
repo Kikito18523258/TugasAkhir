@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 15, 2022 at 04:32 PM
+-- Generation Time: Nov 18, 2022 at 07:45 PM
 -- Server version: 10.4.6-MariaDB
 -- PHP Version: 7.3.9
 
@@ -25,14 +25,25 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `evaluasi`
+-- Table structure for table `evaluasis`
 --
 
-CREATE TABLE `evaluasi` (
+CREATE TABLE `evaluasis` (
   `id` bigint(20) UNSIGNED NOT NULL,
+  `masalah` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `ide_baru` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `momen_spesial` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id_rpp` bigint(20) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `evaluasis`
+--
+
+INSERT INTO `evaluasis` (`id`, `masalah`, `ide_baru`, `momen_spesial`, `id_rpp`, `created_at`, `updated_at`) VALUES
+(1, 'sasasa', 'sss', '4444', 1, '2022-11-18 09:13:56', '2022-11-18 09:13:56');
 
 -- --------------------------------------------------------
 
@@ -117,7 +128,10 @@ INSERT INTO `kompetensi_dasars` (`id`, `kodeKD`, `kompetensiDasar`, `mataPelajar
 (1, '3.1', 'Menyimpulkan informasi berdasarkan teks laporan hasil pengamatan yang didengar dan dibaca.', 1, '3.1.1 Memahami informasi berdasarkan teks laporan hasil pengamatan yang didengar dan dibaca.\r\n3.1.2 Mengetahui cara menyimpulkan teks laporan hasil pengamatan.', 6, '2022-11-09 17:00:00', '2022-11-11 08:06:53'),
 (7, '3.2', 'Menyimpulkan informasi berdasarkan teks laporan hasil pengamatan yang didengar dan dibaca.', 1, '3.2.1 Memahami informasi berdasarkan teks laporan hasil pengamatan yang didengar dan dibaca.\r\n3.1.2 Mengetahui cara menyimpulkan teks laporan hasil pengamatan.', 6, '2022-11-09 17:00:00', '2022-11-11 08:06:53'),
 (8, '3.3', 'Menyimpulkan informasi berdasarkan teks laporan hasil pengamatan yang didengar dan dibaca.', 1, '3.3.1 Memahami informasi berdasarkan teks laporan hasil pengamatan yang didengar dan dibaca.\r\n3.1.2 Mengetahui cara menyimpulkan teks laporan hasil pengamatan.', 6, '2022-11-09 17:00:00', '2022-11-11 08:06:53'),
-(9, '3.2', 'Menyimpulkan informasi berdasarkan teks laporan hasil pengamatan yang didengar dan dibaca.', 2, '3.2.1 Memahami informasi berdasarkan teks laporan hasil pengamatan yang didengar dan dibaca. ', 6, '2022-11-09 17:00:00', '2022-11-11 08:06:53');
+(9, '3.2', 'Menyimpulkan informasi berdasarkan teks laporan hasil pengamatan yang didengar dan dibaca.', 2, '3.2.1 Memahami informasi berdasarkan teks laporan hasil pengamatan yang didengar dan dibaca. ', 6, '2022-11-09 17:00:00', '2022-11-11 08:06:53'),
+(11, 'as', 'asas', 3, 'sasaasassaas', 6, '2022-11-18 08:06:57', '2022-11-18 08:06:57'),
+(12, 'sass', 'asassa', 1, 'saasas', 6, '2022-11-18 08:12:53', '2022-11-18 08:12:53'),
+(13, '1212', '222', 2, 'asasasa', 6, '2022-11-18 08:13:17', '2022-11-18 08:13:17');
 
 -- --------------------------------------------------------
 
@@ -182,9 +196,10 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (6, '2022_11_10_065207_create_mata_pelajarans_table', 4),
 (7, '2022_11_10_070629_create_kompetensi_dasars_table', 4),
 (9, '2022_11_10_153836_create_indikators_table', 5),
-(11, '2022_11_13_163357_create_evaluasi_table', 6),
 (12, '2022_11_15_123838_create_kompetensi_inti_table', 6),
-(13, '2022_11_13_162027_create_rpp_table', 7);
+(13, '2022_11_13_162027_create_rpp_table', 7),
+(14, '2022_11_15_145212_create_tema_table', 8),
+(15, '2022_11_13_163357_create_evaluasi_table', 9);
 
 -- --------------------------------------------------------
 
@@ -210,13 +225,14 @@ CREATE TABLE `rpps` (
   `kelas` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `semester` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `tahun_ajaran` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `tema` bigint(20) UNSIGNED NOT NULL,
-  `sub_tema` bigint(20) UNSIGNED NOT NULL,
+  `tema` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `sub_tema` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `pembelajaran_ke` int(11) NOT NULL,
   `alokasi_waktu` int(11) NOT NULL,
   `kompetensi_inti` bigint(20) UNSIGNED NOT NULL,
   `muatan` bigint(20) UNSIGNED NOT NULL,
   `kompetensi_dasar` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `indikator` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `indikator` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `tujuan` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `materi` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `pendekatan_metode` text COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -237,10 +253,10 @@ CREATE TABLE `rpps` (
 -- Dumping data for table `rpps`
 --
 
-INSERT INTO `rpps` (`id_rpp`, `satuan_pendidikan`, `kelas`, `semester`, `tahun_ajaran`, `tema`, `sub_tema`, `alokasi_waktu`, `kompetensi_inti`, `muatan`, `kompetensi_dasar`, `indikator`, `tujuan`, `materi`, `pendekatan_metode`, `kegiatan_pendahuluan`, `waktu_pendahuluan`, `kegiatan_inti`, `waktu_inti`, `kegiatan_penutup`, `waktu_penutup`, `penilaian`, `remediasi_pengayaan`, `sumber_media`, `created_at`, `updated_at`) VALUES
-(1, 'SD Negeri 1 Sruweng', '1', '1', '2010/2010', 1, 1, 12, 1, 12, 'saasas', 'asasas', '2112', '12', '1212', '21', 12, '12', 12, '21', 12, '21', '12', '21', '2022-11-15 07:00:30', '2022-11-15 07:00:30'),
-(2, 'SD Negeri 1 Sruweng', '1', '1', '2010/2011', 1, 1, 2, 1, 21, '.$request->kd.', 'asasas', '21', '21', '21', '21', 21, '21', 12, '12', 12, '21', '12', '21', '2022-11-15 07:08:39', '2022-11-15 07:08:39'),
-(3, 'SD Negeri 1 Sruweng', '1', '1', '2010/2011', 1, 1, 2, 1, 21, '[\"3.1 Menyimpulkan informasi berdasarkan teks laporan hasil pengamatan yang didengar dan dibaca.\",\"3.2 Menyimpulkan informasi berdasarkan teks laporan hasil pengamatan yang didengar dan dibaca.\"]', 'asasas', '21', '21', '21', '21', 21, '21', 12, '12', 12, '21', '12', '21', '2022-11-15 07:11:05', '2022-11-15 07:11:05');
+INSERT INTO `rpps` (`id_rpp`, `satuan_pendidikan`, `kelas`, `semester`, `tahun_ajaran`, `tema`, `sub_tema`, `pembelajaran_ke`, `alokasi_waktu`, `kompetensi_inti`, `muatan`, `kompetensi_dasar`, `indikator`, `tujuan`, `materi`, `pendekatan_metode`, `kegiatan_pendahuluan`, `waktu_pendahuluan`, `kegiatan_inti`, `waktu_inti`, `kegiatan_penutup`, `waktu_penutup`, `penilaian`, `remediasi_pengayaan`, `sumber_media`, `created_at`, `updated_at`) VALUES
+(1, 'SD Negeri 1 Sruweng', '6', '1', '2022/2023', 'Selamatkan Makhluk Hidup', 'Tumbuhan Sahabatku', 1, 1, 1, 2, 'nope', 'nope', 'nope', 'nope', 'nope', 'nope', 15, 'nope', 120, 'nope', 15, 'nope', 'nope', 'nope', '2022-11-15 07:00:30', '2022-11-15 07:00:30'),
+(2, 'SD Negeri 1 Sruweng', '6', '1', '2022/2023', 'Selamatkan Makhluk Hidup', 'Hewan Sahabatku', 2, 1, 1, 2, 'nope', 'nope', 'nope', 'nope', 'nope', 'nope', 15, 'nope', 120, 'nope', 15, 'nope', 'nope', 'nope', '2022-11-15 07:00:30', '2022-11-15 07:00:30'),
+(3, 'SD Negeri 1 Sruweng', '6', '1', '2022/2023', 'Selamatkan Makhluk Hidup', 'Ayo, Selamatkan Hewan dan Tumbuhan', 2, 1, 1, 2, 'nope', 'nope', 'nope', 'nope', 'nope', 'nope', 15, 'nope', 120, 'nope', 15, 'nope', 'nope', 'nope', '2022-11-15 07:00:30', '2022-11-15 07:00:30');
 
 -- --------------------------------------------------------
 
@@ -254,6 +270,19 @@ CREATE TABLE `siswa` (
   `tempat_lahir` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `tanggal_lahir` date NOT NULL,
   `alamat` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `temas`
+--
+
+CREATE TABLE `temas` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `judul_tema` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -282,17 +311,18 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `name`, `email`, `role`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
 (1, 'Admin', 'admin1@gmail.com', 2, NULL, '$2y$10$6ESfPM7i34tPPRLUnjIEMOkX8/YsG9k1LTTDVFoaSRtTl5eGpVdte', NULL, '2022-09-20 01:02:47', '2022-09-20 01:02:47'),
-(2, 'Guru1', 'guru1@gmail.com', 1, NULL, '$2y$10$Wum/TsJL/qbLMW9/43qM8uy8fys2Xml4/fhu9QjOdr1QRlmmi0iAK', NULL, '2022-09-20 02:41:13', '2022-09-20 02:41:13');
+(2, 'Guru', 'guru1@gmail.com', 1, NULL, '$2y$10$Wum/TsJL/qbLMW9/43qM8uy8fys2Xml4/fhu9QjOdr1QRlmmi0iAK', NULL, '2022-09-20 02:41:13', '2022-09-20 02:41:13');
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `evaluasi`
+-- Indexes for table `evaluasis`
 --
-ALTER TABLE `evaluasi`
-  ADD PRIMARY KEY (`id`);
+ALTER TABLE `evaluasis`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `evaluasi_id_rpp` (`id_rpp`);
 
 --
 -- Indexes for table `failed_jobs`
@@ -357,6 +387,12 @@ ALTER TABLE `siswa`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `temas`
+--
+ALTER TABLE `temas`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -368,10 +404,10 @@ ALTER TABLE `users`
 --
 
 --
--- AUTO_INCREMENT for table `evaluasi`
+-- AUTO_INCREMENT for table `evaluasis`
 --
-ALTER TABLE `evaluasi`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+ALTER TABLE `evaluasis`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -395,7 +431,7 @@ ALTER TABLE `kelas`
 -- AUTO_INCREMENT for table `kompetensi_dasars`
 --
 ALTER TABLE `kompetensi_dasars`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `kompetensi_inti`
@@ -413,7 +449,7 @@ ALTER TABLE `mata_pelajarans`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `rpps`
@@ -428,6 +464,12 @@ ALTER TABLE `siswa`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `temas`
+--
+ALTER TABLE `temas`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
@@ -436,6 +478,12 @@ ALTER TABLE `users`
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `evaluasis`
+--
+ALTER TABLE `evaluasis`
+  ADD CONSTRAINT `evaluasi_id_rpp` FOREIGN KEY (`id_rpp`) REFERENCES `rpps` (`id_rpp`);
 
 --
 -- Constraints for table `kompetensi_dasars`
