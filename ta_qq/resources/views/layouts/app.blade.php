@@ -113,36 +113,7 @@
                 </div>
             </li>
 
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#daftarGuru"
-                    aria-expanded="true" aria-controls="collapseTwo">
-                    <i class="fas fa-fw fa-user"></i>
-                    <span>Daftar Guru</span>
-                </a>
-                <div id="daftarGuru" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Fitur :</h6>
-                        <a class="collapse-item" href="/lihatDaftarGuru">Lihat Daftar Guru</a>
-                        <a class="collapse-item" href="/inputDaftarGuru">Input Daftar Guru</a>
-                    </div>
-                </div>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#jadwalPelajaran"
-                    aria-expanded="true" aria-controls="collapseTwo">
-                    <i class="fas fa-fw fa-pen"></i>
-                    <span>Daftar Tema</span>
-                </a>
-                <div id="jadwalPelajaran" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Fitur :</h6>
-                        <a class="collapse-item" href="/lihatDaftarTema">Lihat Daftar Tema</a>
-                        <a class="collapse-item" href="/inputDaftarTema">Input Daftar Tema</a>
-                    </div>
-                </div>
-            </li>
-
+        
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#rpp"
                     aria-expanded="true" aria-controls="collapseTwo">
@@ -152,15 +123,28 @@
                 <div id="rpp" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Fitur :</h6>
-                        <a class="collapse-item" href="/rpp">Lihat</a>
-                        <a class="collapse-item" href="/pembelajaranMingguan">Tambah</a> 
+                        <a class="collapse-item" href="/rpp">Lihat</a> 
                     </div>
                 </div>
             </li>   
+            <li class="nav-item">
+                <a class="nav-link collapsed"  data-toggle="collapse" data-target="#evaluasi"
+                    aria-expanded="true" aria-controls="collapseTwo">
+                    <i class="fas fa-fw fa-edit"></i>
+                    <span>Evaluasi</span>
+                </a>
+                <div id="evaluasi" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Fitur :</h6>
+                        <a class="collapse-item" href="/evaluasi">Lihat</a> 
+                    </div>
+                </div>
+            </li> 
             <div class="text-center d-none d-md-inline">
                 <button class="rounded-circle border-0" id="sidebarToggle"></button>
             </div>
         </ul>
+        
         <!-- End of Sidebar -->
 
         <!-- Content Wrapper -->
@@ -178,18 +162,7 @@
                     </button>
 
                     <!-- Topbar Search -->
-                    <form
-                        class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                        <div class="input-group">
-                            <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
-                                aria-label="Search" aria-describedby="basic-addon2">
-                            <div class="input-group-append">
-                                <button class="btn btn-primary" type="button">
-                                    <i class="fas fa-search fa-sm"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+ 
 
                     <!-- Topbar Navbar -->
                      <ul class="navbar-nav ml-auto">
@@ -235,13 +208,7 @@
     <!-- End of Main Content -->
 
             <!-- Footer -->
-            <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright KIKITO</span>
-                    </div>
-                </div>
-            </footer>
+   
             <!-- End of Footer -->
 
         </div>

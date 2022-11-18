@@ -104,6 +104,13 @@ public function index()
         //
     }
 
+	public function viewRpp($id)
+    {
+    	$rpp = Rpp::findOrFail($id);
+    	$mapel = MataPelajaran::findOrFail($rpp->muatan);
+        return view('rpp.viewRpp',compact('rpp','mapel'));
+    }
+
     /**
      * Show the form for editing the specified resource.
      *

@@ -4,10 +4,10 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class KompetensiDasar extends Model
+class Evaluasi extends Model
 {
     protected $primaryKey = 'id';
     protected $fillable = [
-    	'created_at', 'updated_at','kodeKD','kompetensiDasar','mataPelajaran','indikator','kelas'
+    	'created_at', 'updated_at','masalah','ide_baru','momen_spesial','id_rpp'
     ];
 }

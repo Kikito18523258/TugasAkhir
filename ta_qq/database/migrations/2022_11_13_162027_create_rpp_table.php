@@ -19,13 +19,14 @@ class CreateRppTable extends Migration
             $table->string('kelas');
             $table->string('semester');
             $table->string('tahun_ajaran');
-            $table->biginteger('tema')->unsigned();
-            $table->biginteger('sub_tema')->unsigned();
+            $table->string('tema');
+            $table->string('sub_tema');
+            $table->integer('pembelajaran_ke');
             $table->integer('alokasi_waktu'); 
             $table->biginteger('kompetensi_inti')->unsigned();
             $table->biginteger('muatan')->unsigned();
             $table->biginteger('kompetensi_dasar')->unsigned();
-            $table->string('indikator');
+            $table->text('indikator');
             $table->text('tujuan');
             $table->text('materi');
             $table->text('pendekatan_metode'); 

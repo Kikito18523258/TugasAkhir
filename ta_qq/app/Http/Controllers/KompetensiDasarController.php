@@ -20,7 +20,8 @@ class KompetensiDasarController extends Controller
         $k = $kelas;
         $m = $mapel; 
         $showKompetensi = KompetensiDasar::where([['kelas', $kelas],['mataPelajaran', $mapel]])->get();  
-        return view('kdasar.kompetensiDasars', compact('showKompetensi','k','m'));
+        $namaMapel = MataPelajaran::FindOrFail($m);
+        return view('kdasar.kompetensiDasars', compact('showKompetensi','k','m','namaMapel'));
     }
 
     /**
@@ -28,20 +29,41 @@ class KompetensiDasarController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($k,$m)
     {
-        //
+        $mapel = MataPelajaran::FindOrFail($m);
+        return view('kdasar.create',compact('mapel','k','m'));
     }
-
+ 
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //
+    public function store(Request $request,$k,$m)
+    { 
+
+        $request -> validate([
+            'kodeKD' => 'required', 
+            'kompetensiDasar' => 'required',
+            'mataPelajaran' => 'required',
+            'indikator' => 'required', 
+        ]);
+        $save = kompetensiDasar::create([
+                "kodeKD"=>$request->kodeKD,
+                "kompetensiDasar"=>$request->kompetensiDasar,
+                "mataPelajaran"=>$m,
+                "indikator"=>$request->indikator,
+                "kelas"=>$request->kelas, 
+            ]);
+
+        if($save){
+           return redirect('/kompetensiDasar/'.$k.'/'.$m)->with('success', 'Data telah berhasil ditambah');
+        }else{
+           echo 'gagal save';
+           die;
+        }
     }
 
     /**
