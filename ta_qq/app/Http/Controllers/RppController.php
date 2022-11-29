@@ -34,6 +34,7 @@ public function index()
      */
     public function store(Request $request)
     {  
+    	// dd($request->muatan);
     	/*$request -> validate([
             'satuan_pendidikan' => 'required',
             'kelas' => 'required',
@@ -65,13 +66,14 @@ public function index()
     			"tahun_ajaran"=>$request->t1."/".$request->t2,
     			"tema"=>$request->tema,
     			"sub_tema"=>$request->sub_tema,
+    			"pembelajaran_ke"=>$request->pembelajaran_ke,
     			"alokasi_waktu"=>$request->alokasi_waktu,
     			"kompetensi_inti"=>$request->kompetensi_inti,
-    			"muatan"=>$request->muatan, 
+    			"muatan"=> json_encode($request->muatan), 
     			"kompetensi_dasar"=> json_encode($request->kd),
     			"indikator"=>"asasas",
     			"tujuan"=>$request->tujuan,
-    			"materi"=>$request->muatan,
+    			"materi"=>'nope',
     			"pendekatan_metode"=>$request->pendekatan_metode,
     			"kegiatan_pendahuluan"=>$request->kegiatan_pendahuluan,
     			"waktu_pendahuluan"=>$request->waktu_pendahuluan,
@@ -107,8 +109,8 @@ public function index()
 	public function viewRpp($id)
     {
     	$rpp = Rpp::findOrFail($id);
-    	$mapel = MataPelajaran::findOrFail($rpp->muatan);
-        return view('rpp.viewRpp',compact('rpp','mapel'));
+    	// $mapel = MataPelajaran::findOrFail($rpp->muatan);
+        return view('rpp.viewRpp',compact('rpp'));
     }
 
     /**
@@ -147,7 +149,8 @@ public function index()
  
     public function showKD(Request $request) 
     { 
-        $data['k_dasar'] = KompetensiDasar::where("MataPelajaran",$request->id) ->get(["kodeKD","kompetensiDasar", "id"]);     
+    	// dd($request->id);
+        $data['k_dasar'] = KompetensiDasar::where("MataPelajaran",$request->id)->get(["kodeKD","kompetensiDasar", "id"]);     
         return response()->json($data);
 
     }

@@ -99,11 +99,10 @@ input[type=number] {
             <div class="form-group row">
             <label class="col-sm-2 col-form-label">Muatan </label>
                 <div class="col-sm-8">  
+                    <!-- checkbox -->
                     <div>  
                         @foreach ($dataMapel as $data) 
-                        <input type="checkbox" id="mapel-dropdown" value="{{$data->id}}"> 
-                            {{$data->nama}} 
-                        </input> 
+                        <input type="checkbox" id="mapel-dropdown<?= $data->id ?>" onchange="checkData(this)" name="muatan[]" value="<?= $data->id ?>"> {{ $data->nama }}
                         <br>
                         @endforeach 
                     </div> 
@@ -112,7 +111,11 @@ input[type=number] {
             <div class="form-group row">
                 <div id="tt" class="col-sm-2 col-form-label"></div>
                 <div class="col-sm-8">
-                    <div id="kd-checkbox"></div>
+                    <!-- check -->
+                    @foreach ($dataMapel as $data) 
+                    <div id="kd-checkbox<?= $data->id ?>">
+                    </div>
+                    @endforeach
                 </div>
                 
             </div> 
@@ -127,7 +130,7 @@ input[type=number] {
         <div class="form-group row">
             <label class="col-sm-2 col-form-label">Materi</label>
             <div class="col-sm-8"> 
-                <textarea class="form-control" name="muatan"></textarea>
+                <textarea class="form-control" name="materi"></textarea>
             </div> 
         </div>
 
@@ -223,19 +226,41 @@ input[type=number] {
     </form>
 </div> 
 <script>
-    $(document).ready(function () {
-        /*------------------------------------------
-        --------------------------------------------
-        State Dropdown Change Event
-        --------------------------------------------
-        --------------------------------------------*/
-        $('#mapel-dropdown').on('change', function () {
-            $("#tt").html('<label>Kompetensi Dasar</label>');
-            var idKD = this.value;
-            $("#kd-checkbox").html('');
+    // $(document).ready(function () {
+    //     $('#mapel-dropdown').on('change', function () {
+    //         $("#tt").html('<label>Kompetensi Dasar</label>');
+    //         var idKD = this.value;
+
+    //         console.log(idKD);
+    //         $("#kd-checkbox").html('');
+    //         $.ajax({
+    //             url: "{{url('rpp/showKD')}}",
+    //             type: "POST",
+    //             data: {
+    //                 id: idKD,
+    //                 _token: '{{csrf_token()}}'
+    //             },
+    //             dataType: 'json',
+    //             success: function (response) { 
+    //                 $.each(response.k_dasar, function (key, value) {
+    //                     $("#kd-checkbox").append('<input type="checkbox" name="kd[]" value="' + value.kodeKD+' '+value.kompetensiDasar + '"><label class="px-2">' + value.kodeKD+' '+value.kompetensiDasar + '</label> <br>');
+    //                 });
+    //             }
+    //         });
+    //     });
+
+    // });
+
+    function checkData(i){
+        $("#tt").html('<label>Kompetensi Dasar</label>');
+        var idKD = i.value;
+        var cek = document.getElementById('mapel-dropdown'+idKD);
+        if (cek.checked  ) {
+            console.log('checked'+idKD);
+            $("#kd-checkbox" + idKD).html('');
             $.ajax({
-                url: "{{url('rpp/showKD')}}",
                 type: "POST",
+                url: "{{url('rpp/showKD')}}",
                 data: {
                     id: idKD,
                     _token: '{{csrf_token()}}'
@@ -243,13 +268,16 @@ input[type=number] {
                 dataType: 'json',
                 success: function (response) { 
                     $.each(response.k_dasar, function (key, value) {
-                        $("#kd-checkbox").append('<input type="checkbox" name="kd[]" value="' + value.kodeKD+' '+value.kompetensiDasar + '"><label class="px-2">' + value.kodeKD+' '+value.kompetensiDasar + '</label> <br>');
+                        $("#kd-checkbox" + idKD).append('<input type="checkbox" id="content'+idKD+'" name="kd['+ idKD +'][]" value="' + value.kodeKD+' '+value.kompetensiDasar + '"><label class="px-2">' + value.kodeKD+' '+value.kompetensiDasar + '</label> <br>');
                     });
                 }
             });
-        });
+        }else{
+            console.log('#remove'+idKD);
+            $("#kd-checkbox" + idKD).html('');
+        }
 
-    });
+    }
 </script>
 
 @endsection 

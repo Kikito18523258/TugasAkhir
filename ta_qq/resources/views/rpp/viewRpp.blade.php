@@ -1,5 +1,8 @@
 @extends('layouts.app')
 @section('content')
+@php
+use App\MataPelajaran;
+@endphp
 <link rel="stylesheet" type="text/css" href="{{asset('css/sheets-of-paper-a4.css')}}">
  <div style="margin: 3%;">
     @if ($message = Session::get('success'))
@@ -39,7 +42,20 @@
                         <tr>
                             <td>Muatan Terpadu</td>
                             <td> : </td>
-                            <td>{{$rpp->muatan}}</td>
+                            <td>
+                                <?php 
+                                    $data =  json_decode($rpp->muatan);
+                                    $next =  json_decode($rpp->muatan);
+                                    foreach ($data as $value)
+                                    {   
+                                        $mapel = MataPelajaran::findOrFail($value);
+                                        echo $mapel->nama;
+                                        if (next($next )) {
+                                            echo ','; 
+                                        }
+                                    }
+                                 ?>
+                            </td>
                         </tr>
                         <tr>
                             <td>Pembelajaran ke</td>
@@ -57,50 +73,45 @@
                         <b>A.KOMPETENSI INTI</b> <br> {{$rpp->kompetensi_inti}}
                     </p>
                     <p>
-                        <b>B.KOMPETENSI DASAR DAN INDIKATOR</b> <br>Muatan: {{$mapel->nama}}<br>
+                        <b>B.KOMPETENSI DASAR DAN INDIKATOR</b> <br>
+                        @php 
+                            $no = 1;
+                            $data =  json_decode($rpp->muatan);
+                        @endphp
+                            
+                            @foreach($data as $muatan)
+                            @php
+                            $mapel = MataPelajaran::findOrFail($muatan);
+                            @endphp
+                         
+                        Muatan: {{ $mapel->nama }} <br>
                         <table border="1" width="100%">
-                        <tr>
-                            <th>Nomor</th>
-                            <th>Kompetensi</th>
-                            <th>Indikator</th>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>{{$rpp->kompetensi_dasar}}</td>
-                            <td>{{$rpp->indikator}}</td>
-                        </tr> 
-                    </table>
+                            <tr>
+                                <th>Nomor</th>
+                                <th>Kompetensi</th>
+                                <th>Indikator</th>
+                            </tr>
+                            <tr>
+                                <td>{{ $no++ }}</td>
+                                <td> 
+                                    @php
+                                        $data =  json_decode($rpp->kompetensi_dasar);
+                                        // dd($data);
+                                        @endphp
+                                        @foreach ($data as $key => $value)
+                                      
+                                            @if ($muatan == $key ) 
+                                                @foreach ($value as $kd) 
+                                                    {{ $kd}} <br>
+                                                @endforeach
+                                            @endif
+                                        @endforeach
+                                </td>
+                                <td>{{$rpp->indikator}}</td>
+                            </tr> 
+                        </table>
+                        @endforeach
                     </p>  
-                    <p>
-                        Muatan:{{$mapel->nama}}<br>
-                        <table border="1" width="100%">
-                        <tr>
-                            <th>Nomor</th>
-                            <th>Kompetensi</th>
-                            <th>Indikator</th>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>{{$rpp->kompetensi_dasar}}</td>
-                            <td>{{$rpp->indikator}}</td>
-                        </tr> 
-                    </table>
-                    </p>
-                    <p>
-                        Muatan: {{$mapel->nama}}<br>
-                        <table border="1" width="100%">
-                        <tr>
-                            <th>Nomor</th>
-                            <th>Kompetensi</th>
-                            <th>Indikator</th>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>{{$rpp->kompetensi_dasar}}</td>
-                            <td>{{$rpp->indikator}}</td>
-                        </tr> 
-                    </table>
-                    </p>
                     <p>
                         <b>C.TUJUAN </b><br>
                         {{$rpp->tujuan}}
