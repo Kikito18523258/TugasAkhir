@@ -75,40 +75,40 @@ use App\MataPelajaran;
                     <p>
                         <b>B.KOMPETENSI DASAR DAN INDIKATOR</b> <br>
                         @php 
-                            $no = 1;
                             $data =  json_decode($rpp->muatan);
                         @endphp
                             
                             @foreach($data as $muatan)
                             @php
+                            $no = 1;
                             $mapel = MataPelajaran::findOrFail($muatan);
                             @endphp
                          
                         Muatan: {{ $mapel->nama }} <br>
                         <table border="1" width="100%">
                             <tr>
-                                <th>Nomor</th>
+                                <th>No</th>
                                 <th>Kompetensi</th>
                                 <th>Indikator</th>
                             </tr>
-                            <tr>
-                                <td>{{ $no++ }}</td>
-                                <td> 
+                                
                                     @php
-                                        $data =  json_decode($rpp->kompetensi_dasar);
-                                        // dd($data);
+                                        $data =  json_decode($rpp->kompetensi_dasar); 
                                         @endphp
                                         @foreach ($data as $key => $value)
-                                      
                                             @if ($muatan == $key ) 
                                                 @foreach ($value as $kd) 
-                                                    {{ $kd}} <br>
+                                                <tr>
+                                                    <td width="10%">{{ substr($kd,0,4) }}</td>
+                                                    <td> 
+                                                        {{ substr($kd,3)}}
+                                                    </td>
+                                                    <td>{{$rpp->indikator}}</td>
+                                                </tr> 
                                                 @endforeach
                                             @endif
                                         @endforeach
-                                </td>
-                                <td>{{$rpp->indikator}}</td>
-                            </tr> 
+                                
                         </table>
                         @endforeach
                     </p>  
