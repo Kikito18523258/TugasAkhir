@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 18, 2022 at 07:45 PM
+-- Generation Time: Dec 01, 2022 at 02:00 PM
 -- Server version: 10.4.6-MariaDB
 -- PHP Version: 7.3.9
 
@@ -27,23 +27,8 @@ SET time_zone = "+00:00";
 --
 -- Table structure for table `evaluasis`
 --
-
-CREATE TABLE `evaluasis` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `masalah` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `ide_baru` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `momen_spesial` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `id_rpp` bigint(20) UNSIGNED NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `evaluasis`
---
-
-INSERT INTO `evaluasis` (`id`, `masalah`, `ide_baru`, `momen_spesial`, `id_rpp`, `created_at`, `updated_at`) VALUES
-(1, 'sasasa', 'sss', '4444', 1, '2022-11-18 09:13:56', '2022-11-18 09:13:56');
+-- Error reading structure for table ta_rpp.evaluasis: #1932 - Table 'ta_rpp.evaluasis' doesn't exist in engine
+-- Error reading data for table ta_rpp.evaluasis: #1064 - You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'FROM `ta_rpp`.`evaluasis`' at line 1
 
 -- --------------------------------------------------------
 
@@ -230,7 +215,7 @@ CREATE TABLE `rpps` (
   `pembelajaran_ke` int(11) NOT NULL,
   `alokasi_waktu` int(11) NOT NULL,
   `kompetensi_inti` bigint(20) UNSIGNED NOT NULL,
-  `muatan` bigint(20) UNSIGNED NOT NULL,
+  `muatan` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `kompetensi_dasar` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `indikator` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `tujuan` text COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -254,9 +239,8 @@ CREATE TABLE `rpps` (
 --
 
 INSERT INTO `rpps` (`id_rpp`, `satuan_pendidikan`, `kelas`, `semester`, `tahun_ajaran`, `tema`, `sub_tema`, `pembelajaran_ke`, `alokasi_waktu`, `kompetensi_inti`, `muatan`, `kompetensi_dasar`, `indikator`, `tujuan`, `materi`, `pendekatan_metode`, `kegiatan_pendahuluan`, `waktu_pendahuluan`, `kegiatan_inti`, `waktu_inti`, `kegiatan_penutup`, `waktu_penutup`, `penilaian`, `remediasi_pengayaan`, `sumber_media`, `created_at`, `updated_at`) VALUES
-(1, 'SD Negeri 1 Sruweng', '6', '1', '2022/2023', 'Selamatkan Makhluk Hidup', 'Tumbuhan Sahabatku', 1, 1, 1, 2, 'nope', 'nope', 'nope', 'nope', 'nope', 'nope', 15, 'nope', 120, 'nope', 15, 'nope', 'nope', 'nope', '2022-11-15 07:00:30', '2022-11-15 07:00:30'),
-(2, 'SD Negeri 1 Sruweng', '6', '1', '2022/2023', 'Selamatkan Makhluk Hidup', 'Hewan Sahabatku', 2, 1, 1, 2, 'nope', 'nope', 'nope', 'nope', 'nope', 'nope', 15, 'nope', 120, 'nope', 15, 'nope', 'nope', 'nope', '2022-11-15 07:00:30', '2022-11-15 07:00:30'),
-(3, 'SD Negeri 1 Sruweng', '6', '1', '2022/2023', 'Selamatkan Makhluk Hidup', 'Ayo, Selamatkan Hewan dan Tumbuhan', 2, 1, 1, 2, 'nope', 'nope', 'nope', 'nope', 'nope', 'nope', 15, 'nope', 120, 'nope', 15, 'nope', 'nope', 'nope', '2022-11-15 07:00:30', '2022-11-15 07:00:30');
+(7, 'SD Negeri 1 Sruweng', '1', '1', '2020/2021', '1', '1', 11, 1, 1, '[\"1\",\"2\"]', '{\"1\":[\"3.1 Menyimpulkan informasi berdasarkan teks laporan hasil pengamatan yang didengar dan dibaca.\",\"3.2 Menyimpulkan informasi berdasarkan teks laporan hasil pengamatan yang didengar dan dibaca.\",\"3.3 Menyimpulkan informasi berdasarkan teks laporan hasil pengamatan yang didengar dan dibaca.\",\"sass asassa\"],\"2\":[\"3.2 Menyimpulkan informasi berdasarkan teks laporan hasil pengamatan yang didengar dan dibaca.\",\"1212 222\"]}', 'asasas', 'kjnjk', 'nope', 'klnlk', 'koimio', 4, 'nmlk', 5, 'kjnjoiu', 6, 'ujhoui', 'kjnuoi', 'lknlk', '2022-11-28 23:13:32', '2022-11-28 23:13:32'),
+(9, 'SD Negeri 1 Sruweng', '1', '1', '2020/2021', '1', '1', 1, 1, 1, '[\"1\",\"3\"]', '{\"1\":[\"3.1 Menyimpulkan informasi berdasarkan teks laporan hasil pengamatan yang didengar dan dibaca.\",\"3.2 Menyimpulkan informasi berdasarkan teks laporan hasil pengamatan yang didengar dan dibaca.\"],\"3\":[\"as asas\"]}', 'asasas', 'hsbdjsnd', 'nope', '1', '1', 1, '1', 1, '1', 1, '1', '1', '1', '2022-11-29 00:52:43', '2022-11-29 00:52:43');
 
 -- --------------------------------------------------------
 
@@ -316,13 +300,6 @@ INSERT INTO `users` (`id`, `name`, `email`, `role`, `email_verified_at`, `passwo
 --
 -- Indexes for dumped tables
 --
-
---
--- Indexes for table `evaluasis`
---
-ALTER TABLE `evaluasis`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `evaluasi_id_rpp` (`id_rpp`);
 
 --
 -- Indexes for table `failed_jobs`
@@ -404,12 +381,6 @@ ALTER TABLE `users`
 --
 
 --
--- AUTO_INCREMENT for table `evaluasis`
---
-ALTER TABLE `evaluasis`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
 -- AUTO_INCREMENT for table `failed_jobs`
 --
 ALTER TABLE `failed_jobs`
@@ -455,7 +426,7 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `rpps`
 --
 ALTER TABLE `rpps`
-  MODIFY `id_rpp` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_rpp` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `siswa`
@@ -478,12 +449,6 @@ ALTER TABLE `users`
 --
 -- Constraints for dumped tables
 --
-
---
--- Constraints for table `evaluasis`
---
-ALTER TABLE `evaluasis`
-  ADD CONSTRAINT `evaluasi_id_rpp` FOREIGN KEY (`id_rpp`) REFERENCES `rpps` (`id_rpp`);
 
 --
 -- Constraints for table `kompetensi_dasars`

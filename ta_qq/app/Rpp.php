@@ -34,5 +34,5 @@ class Rpp extends Model
     // 	'remediasi_pengayaan',
     // 	'sumber_media',
     // ];
-    protected $guarded = [];
+    protected $guarded = []; //kolom yang tidak boleh dirubah
 }

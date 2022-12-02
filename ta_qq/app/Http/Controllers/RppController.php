@@ -6,13 +6,16 @@ use Illuminate\Http\Request;
 use App\MataPelajaran;
 use App\KompetensiDasar;
 use App\Rpp;
+use App\Subtema;
+use App\KompetensiInti;
 
 class RppController extends Controller
 {
 public function index()
     {
     	$rpp = Rpp::all();
-        return view('rpp.index',compact('rpp'));
+        $subtema = Subtema::all();
+        return view('rpp.index',compact('rpp','subtema'));
     }
 
     /**
@@ -34,31 +37,6 @@ public function index()
      */
     public function store(Request $request)
     {  
-    	// dd($request->muatan);
-    	/*$request -> validate([
-            'satuan_pendidikan' => 'required',
-            'kelas' => 'required',
-            'semester' => 'required',
-    		'tahun_ajaran' => 'required',
-    		'tema' => 'required',
-    		'sub_tema' => 'required',
-    		'alokasi_waktu' => 'required',
-    		'kompetensi_inti' => 'required',
-    		'muatan' => 'required',
-    		'kompetensi_dasar' => 'required',
-    		'indikator' => 'required',
-    		'tujuan' => 'required',
-    		'materi' => 'required',
-    		'pendekatan_metode' => 'required',
-    		'kegiatan_pendahuluan' => 'required',
-    		'waktu_pendahuluan' => 'required',
-    		'kegiatan_inti' => 'required',
-    		'waktu_inti' => 'required',
-    		'kegiatan_penutup' => 'required',
-    		'waktu_penutup' => 'required',
-    		'remidiasi_pengayaan' => 'required',
-    		'sumber_media' => 'required', 
-        ]);*/
         $save = Rpp::create([
                 "satuan_pendidikan"=>$request->satuan_pendidikan,
                 "kelas"=>$request->kelas,
@@ -71,9 +49,9 @@ public function index()
     			"kompetensi_inti"=>$request->kompetensi_inti,
     			"muatan"=> json_encode($request->muatan), 
     			"kompetensi_dasar"=> json_encode($request->kd),
-    			"indikator"=>"asasas",
+    			"indikator"=>"dummy",
     			"tujuan"=>$request->tujuan,
-    			"materi"=>'nope',
+    			"materi"=>$request->materi,
     			"pendekatan_metode"=>$request->pendekatan_metode,
     			"kegiatan_pendahuluan"=>$request->kegiatan_pendahuluan,
     			"waktu_pendahuluan"=>$request->waktu_pendahuluan,
@@ -109,8 +87,9 @@ public function index()
 	public function viewRpp($id)
     {
     	$rpp = Rpp::findOrFail($id);
+        $komInti = KompetensiInti::all();
     	// $mapel = MataPelajaran::findOrFail($rpp->muatan);
-        return view('rpp.viewRpp',compact('rpp'));
+        return view('rpp.viewRpp',compact('rpp','komInti'));
     }
 
     /**
@@ -121,7 +100,11 @@ public function index()
      */
     public function edit($id)
     {
-        //
+        $sub_tema = Subtema::all();
+        $rpp = Rpp::findOrFail($id);
+        $dataMapel = MataPelajaran::all();
+        $kompetensi_inti = KompetensiInti::all();
+        return view('rpp.editRpp', compact('rpp','sub_tema','dataMapel','kompetensi_inti'));
     }
 
     /**
@@ -133,7 +116,35 @@ public function index()
      */
     public function update(Request $request, $id)
     {
-        //
+        $datas = Rpp::FindOrFail($id); 
+
+        $datas->satuan_pendidikan = $request->satuan_pendidikan;
+        $datas->kelas = $request->kelas;
+        $datas->semester = $request->semester;
+        $datas->tahun_ajaran = $request->t1."/".$request->t2;
+        $datas->tema = $request->tema;
+        $datas->sub_tema = $request->sub_tema;
+        $datas->pembelajaran_ke = $request->pembelajaran_ke;
+        $datas->alokasi_waktu = $request->alokasi_waktu;
+        $datas->kompetensi_inti = $request->kompetensi_inti;
+        $datas->muatan = json_encode($request->muatan); 
+        $datas->kompetensi_dasar = json_encode($request->kd);
+        $datas->indikator = "dummy";
+        $datas->tujuan = $request->tujuan;
+        $datas->materi = $request->materi;
+        $datas->pendekatan_metode = $request->pendekatan_metode;
+        $datas->kegiatan_pendahuluan = $request->kegiatan_pendahuluan;
+        $datas->waktu_pendahuluan = $request->waktu_pendahuluan;
+        $datas->kegiatan_inti = $request->kegiatan_inti;
+        $datas->waktu_inti = $request->waktu_inti;
+        $datas->kegiatan_penutup = $request->kegiatan_penutup;
+        $datas->waktu_penutup = $request->waktu_penutup;
+        $datas->penilaian = $request->penilaian;
+        $datas->remediasi_pengayaan = $request->remediasi_pengayaan;
+        $datas->sumber_media = $request->sumber_media;
+
+        $datas->save();
+        return redirect('/rpp')->with('success', 'Data telah berhasil diedit');
     }
 
     /**
@@ -144,7 +155,9 @@ public function index()
      */
     public function destroy($id)
     {
-        //
+        $datad = Rpp::FindOrFail($id);
+        $datad -> delete();
+        return redirect('/rpp')->with('success', 'Data berhasil dihapus');
     } 
  
     public function showKD(Request $request) 

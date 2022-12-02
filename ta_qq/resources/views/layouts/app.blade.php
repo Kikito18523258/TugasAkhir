@@ -105,7 +105,7 @@
                               <div class="dropdown">
                                 <a class="collapse-item" type="button" data-toggle="dropdown" >Kelas 6</a>
                                   <div class="dropdown-menu" >
-                                    <a href="" class="dropdown-item">Kompetensi Inti</a> 
+                                    <a href="/kompetensiInti/6" class="dropdown-item">Kompetensi Inti</a> 
                                     <a href="/kompetensiDasar/6" class="dropdown-item" >Kompetensi Dasar</a> 
                                   </div> 
                             </div>

@@ -26,8 +26,14 @@
                         @foreach($rpp as $rppList)
                         <tr>
                             <td>{{$loop->iteration}}</td> 
-                            <td>{{$rppList->tema}}</td>
-                            <td>{{$rppList->sub_tema}}</td>
+                            <td>Tema {{$rppList->tema}}</td>
+                            <td>
+                                @foreach($subtema as $st)
+                                @if($rppList->sub_tema== $st->id)
+                                    {{$st->judul}}
+                                @endif
+                                @endforeach
+                            </td>
                             <td>{{$rppList->pembelajaran_ke}}</td>
                             <td>
                                 <form method="post" action="{{ route('rpp.destroy',$rppList->id_rpp)}}">

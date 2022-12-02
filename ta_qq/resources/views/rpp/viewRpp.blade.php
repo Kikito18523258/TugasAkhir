@@ -2,6 +2,7 @@
 @section('content')
 @php
 use App\MataPelajaran;
+use App\KompetensiDasar;
 @endphp
 <link rel="stylesheet" type="text/css" href="{{asset('css/sheets-of-paper-a4.css')}}">
  <div style="margin: 3%;">
@@ -44,7 +45,7 @@ use App\MataPelajaran;
                             <td> : </td>
                             <td>
                                 <?php 
-                                    $data =  json_decode($rpp->muatan);
+                                    $data =  json_decode($rpp->muatan); 
                                     $next =  json_decode($rpp->muatan);
                                     foreach ($data as $value)
                                     {   
@@ -70,7 +71,14 @@ use App\MataPelajaran;
                     </table>
                     </p>
                     <p>
-                        <b>A.KOMPETENSI INTI</b> <br> {{$rpp->kompetensi_inti}}
+                        <b>A.KOMPETENSI INTI</b> <br> 
+                        
+                            <ol type="1">
+                                @foreach($komInti as $ki)
+                                <li>{{$ki->judul}}</li>
+                            @endforeach
+                            </ol>
+                        
                     </p>
                     <p>
                         <b>B.KOMPETENSI DASAR DAN INDIKATOR</b> <br>
@@ -94,6 +102,7 @@ use App\MataPelajaran;
                                 
                                     @php
                                         $data =  json_decode($rpp->kompetensi_dasar); 
+                                        $komdas = KompetensiDasar::all();
                                         @endphp
                                         @foreach ($data as $key => $value)
                                             @if ($muatan == $key ) 
@@ -103,7 +112,18 @@ use App\MataPelajaran;
                                                     <td> 
                                                         {{ substr($kd,3)}}
                                                     </td>
-                                                    <td>{{$rpp->indikator}}</td>
+                                                    <td>
+                                                        @foreach($komdas as $kd1) 
+                                                            @if($kd1->kelas == $rpp->kelas)
+                                                                @if($mapel->id == $kd1->mataPelajaran)
+                                                                    @if(substr($kd1->indikator,0,3) == substr($kd,0,3)) 
+                                                                    {!! nl2br(e($kd1->indikator))!!}   
+                                                                    <br> 
+                                                                    @endif
+                                                                @endif
+                                                            @endif
+                                                        @endforeach
+                                                    </td>
                                                 </tr> 
                                                 @endforeach
                                             @endif

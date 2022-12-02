@@ -30,7 +30,15 @@ Route::get('/kompetensiDasar/{kelas}/{mapel}', 'kompetensiDasarController@index'
 Route::get('/kompetensiDasar/{kelas}/{mapel}/{id}/edit', 'kompetensiDasarController@edit');
 Route::get('/kompetensiDasar/{k}/{m}/create', 'kompetensiDasarController@create');
 Route::post('/kompetensiDasar/{k}/{m}/store', 'kompetensiDasarController@store');
+
 //Route::post('/kompetensiDasar/{kelas}/{mapel}/{id}/update', 'kompetensiDasarController@update');
+
+//kompetensi inti
+Route::get('/kompetensiInti/{kelas}', 'kompetensiIntiController@index');
+Route::get('/kompetensiInti/{k}/create', 'kompetensiIntiController@create');
+Route::post('/kompetensiInti/{k}/store', 'kompetensiIntiController@store');
+Route::delete('/kompetensiInti/{k}/{id}/delete', 'kompetensiIntiController@destroy');
+
 
 //RPP
 Route::resource('/kompetensiDasar','kompetensiDasarController');
