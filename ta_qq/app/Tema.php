@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Evaluasi extends Model
+class Tema extends Model
 {
     protected $primaryKey = 'id';
     protected $guarded = [];

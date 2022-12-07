@@ -58,19 +58,23 @@ input[type=number] {
         <div class="form-group row">
             <label class="col-sm-2 col-form-label">Tema </label>
             <div class="col-sm-8">
-             <select class="form-control" name="tema"> 
-                 <option value="1">Tema 1</option>  
+             <select class="form-control" name="tema" id="tema-dropdown"> 
+                <option value="">
+                    Pilih Tema :
+                </option>
+                 @foreach($tema as $t)
+                 <option value="{{$t->id}}">{{$t->judul_tema}}</option>
+                 @endforeach
              </select>
              </div>
         </div>
 
         <div class="form-group row">
-            <label class="col-sm-2 col-form-label">Subtema </label>
-            <div class="col-sm-8">
-             <select class="form-control" name="sub_tema"> 
-                 <option value="1">Subtema 1</option>  
-             </select>
-             </div>
+            <label class="col-sm-2 col-form-label"> Subtema</label>
+                <div class="col-sm-8">
+                    <select class="form-control" name="sub_tema" id="subtema-dropdown"> 
+                </select>
+            </div>
         </div>
 
         <div class="form-group row">
@@ -89,10 +93,10 @@ input[type=number] {
 
         <div class="form-group row">
             <label class="col-sm-2 col-form-label">Kompetensi Inti </label>
-            <div class="col-sm-8"> 
-                <select class="form-control" name="kompetensi_inti"> 
-                    <option value="1">Subtema 1</option>  
-                </select>
+            <div class="col-sm-8">  
+                    @foreach($kompetensi_inti as $komin)
+                    <input type="checkbox" checked name="kompetensi_inti" value="{{$komin->id}}">{{$komin->judul}}} <br></option>
+                    @endforeach  
             </div> 
         </div>
 
@@ -225,31 +229,28 @@ input[type=number] {
         </button>
     </form>
 </div> 
+
 <script>
-    // $(document).ready(function () {
-    //     $('#mapel-dropdown').on('change', function () {
-    //         $("#tt").html('<label>Kompetensi Dasar</label>');
-    //         var idKD = this.value;
-
-    //         console.log(idKD);
-    //         $("#kd-checkbox").html('');
-    //         $.ajax({
-    //             url: "{{url('rpp/showKD')}}",
-    //             type: "POST",
-    //             data: {
-    //                 id: idKD,
-    //                 _token: '{{csrf_token()}}'
-    //             },
-    //             dataType: 'json',
-    //             success: function (response) { 
-    //                 $.each(response.k_dasar, function (key, value) {
-    //                     $("#kd-checkbox").append('<input type="checkbox" name="kd[]" value="' + value.kodeKD+' '+value.kompetensiDasar + '"><label class="px-2">' + value.kodeKD+' '+value.kompetensiDasar + '</label> <br>');
-    //                 });
-    //             }
-    //         });
-    //     });
-
-    // });
+    $(document).ready(function () {
+        $('#tema-dropdown').on('change', function () { 
+            var idSubTema = this.value;
+            $("#subtema-dropdown").html('');
+            $.ajax({
+                url: "{{url('rpp/showSubTema')}}",
+                type: "POST",
+                data: {
+                    id: idSubTema,
+                    _token: '{{csrf_token()}}'
+                },
+                dataType: 'json',
+                success: function (response) { 
+                    $.each(response.subtema, function (key, value) {
+                        $("#subtema-dropdown").append('<option class="form-control" value="'+value.id+'"><label class="px-2">'+value.judul+ '</option>');
+                    });
+                }
+            }); 
+        });
+    });
 
     function checkData(i){
         $("#tt").html('<label>Kompetensi Dasar</label>');

@@ -11,25 +11,26 @@
             </div>
             <div>
 
-            	    <form method="POST" action="/evaluasi/{{$id_rpp}}/store">
+            	    <form method="POST" action="/evaluasi/eval/{{$id_rpp}}/store">
 				        @csrf
+
 				        <div class="form-group row">
 				             <label class="col-sm-2 col-form-label">Masalah</label>
 				                 <div class="col-sm-8">
-				                     <textarea class="form-control" name="masalah">@if($checkEvaluasi!=null){{$checkEvaluasi->masalah}}@endif</textarea>
+				                     <textarea class="form-control" name="masalah"></textarea>
 				                 </div>
 				        </div>
 				        <div class="form-group row">
 				            <label class="col-sm-2 col-form-label">Ide Baru</label>
 				            <div class="col-sm-8">
-				              <textarea class="form-control" name="ide_baru">@if($checkEvaluasi!=null){{$checkEvaluasi->ide_baru}}@endif</textarea>
+				              <textarea class="form-control" name="ide_baru"></textarea>
 				             </div>
 				        </div>
 
 				        <div class="form-group row">
 				            <label class="col-sm-2 col-form-label">Momen Spesial</label>
 				            <div class="col-sm-8">
-				                <textarea class="form-control" name="momen_spesial">@if($checkEvaluasi!=null){{$checkEvaluasi->momen_spesial}}@endif</textarea>
+				                <textarea class="form-control" name="momen_spesial"></textarea>
 				             </div>
 				        </div> 
 

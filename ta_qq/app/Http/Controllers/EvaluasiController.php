@@ -7,6 +7,8 @@ use App\MataPelajaran;
 use App\KompetensiDasar;
 use App\Rpp;
 use App\Evaluasi;
+use App\Tema;
+use App\Subtema;
 
 class EvaluasiController extends Controller
 {
@@ -18,13 +20,17 @@ class EvaluasiController extends Controller
     public function index()
     {
         $rpp = Rpp::all();
-        return view('evaluasi.index',compact('rpp'));
+        $tema = Tema::all();
+        $subtema = Subtema::all();
+        $evaluasi = Evaluasi::all();
+        return view('evaluasi.index',compact('rpp','tema','subtema','evaluasi'));
     }
 
     public function evaluasi($id_rpp)
     {
         $rpp = Rpp::FindOrFail($id_rpp);
-        return view('evaluasi.createEvaluasi',compact('rpp','id_rpp'));
+        $checkEvaluasi = Evaluasi::where('id_rpp',$id_rpp)->first();
+        return view('evaluasi.createEvaluasi',compact('rpp','id_rpp','checkEvaluasi'));
     }
 
     /**
@@ -47,14 +53,17 @@ class EvaluasiController extends Controller
     public function storeEvaluasi(Request $request,$id_rpp)
     {
         $request -> validate([
+
             'masalah' => 'required', 
             'ide_baru' => 'required',
             'momen_spesial' => 'required', 
+            'status' => 'required',
         ]);
         $save = Evaluasi::create([
                 "masalah"=>$request->masalah,
                 "ide_baru"=>$request->ide_baru,
                 "momen_spesial"=>$request->momen_spesial,
+                "status"=>$request->status,
                 "id_rpp"=>$id_rpp, 
             ]);
 
@@ -80,6 +89,12 @@ class EvaluasiController extends Controller
     public function show($id)
     {
         //
+    }
+
+    public function viewEvaluasi($id)
+    {
+        $eval = Evaluasi::findOrFail($id);
+        return view('evaluasi.viewEvaluasi',compact('eval'));
     }
 
     /**

@@ -44,10 +44,14 @@ Route::delete('/kompetensiInti/{k}/{id}/delete', 'kompetensiIntiController@destr
 Route::resource('/kompetensiDasar','kompetensiDasarController');
 Route::resource('/rpp','rppController');
 Route::post('rpp/showKD', 'rppController@showKD');
+Route::post('rpp/showSubTema', 'rppController@showSubTema');
 Route::get('/rpp/{id_rpp}/viewRpp', 'rppController@viewRpp');
+Route::get('/rpp/{id_rpp}/download','rppController@wordExport');
 
 //Evaluasi
-Route::resource('/evaluasi','evaluasiController');
-Route::get('/evaluasi/eval/{id_rpp}','evaluasiController@evaluasi');
-Route::post('/evaluasi/eval/{id_rpp}/store','evaluasiController@storeEvaluasi');
+//Route::resource('/evaluasi','evaluasiController');
+Route::get('/evaluasi','evaluasiController@index');
+Route::get('/evaluasi/{id_rpp}','evaluasiController@evaluasi');
+Route::post('/evaluasi/{id_rpp}/store','evaluasiController@storeEvaluasi');
+Route::get('/evaluasi/{id_rpp}/viewEvaluasi','evaluasiController@viewEvaluasi');
    

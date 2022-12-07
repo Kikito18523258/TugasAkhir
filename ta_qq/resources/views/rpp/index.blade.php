@@ -26,7 +26,14 @@
                         @foreach($rpp as $rppList)
                         <tr>
                             <td>{{$loop->iteration}}</td> 
-                            <td>Tema {{$rppList->tema}}</td>
+                            <td>
+                                @foreach($tema as $t)
+                                @if($rppList->tema== $t->id)
+                                    {{$t->judul_tema}}
+                                @endif
+                                @endforeach
+                            </td>
+
                             <td>
                                 @foreach($subtema as $st)
                                 @if($rppList->sub_tema== $st->id)
