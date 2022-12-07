@@ -13,8 +13,11 @@ use App\KompetensiDasar;
     @endif    
             <div class="d-sm-flex align-items-center justify-content-between mb-4">
                 <h1 class="h3 mb-0 text-gray-800">RPP</h1>  
-            <a href="/rpp/{{$rpp->id_rpp}}/download" class="d-none d-sm-inline-block btn btn-sm shadow-sm" style="background: #eb6440; color: white;"><i
-                        class="fas fa-book fa-sm text-white-50"></i> Download</a>
+                @if($rpp->verifikasi==0)
+               <button onclick="alert('Data belum diverifikasi Kepala Sekolah');" class="d-none d-sm-inline-block btn btn-sm shadow-sm" style="background: grey; color: white;"><i class="fas fa-book fa-sm text-white-50"></i> Download</button>
+                @elseif($rpp->verifikasi==1)
+                <a href="/rpp/{{$rpp->id_rpp}}/download" class="d-none d-sm-inline-block btn btn-sm shadow-sm" style="background: #eb6440; color: white;"><i class="fas fa-book fa-sm text-white-50"></i> Download</a>
+                @endif
             </div>
             <div class="document" style="color:black;">
                 <div class="page" contenteditable="false"> 

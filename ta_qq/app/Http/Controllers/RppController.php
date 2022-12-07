@@ -13,14 +13,30 @@ use PhpOffice\PhpWord\TemplateProcessor;
 
 class RppController extends Controller
 {
-public function index()
+	public function index()
     {
     	$rpp = Rpp::all();
         $tema = Tema::all();
         $subtema = Subtema::all();
         return view('rpp.index',compact('rpp','tema','subtema'));
     }
+    
 
+    public function verif()
+    {
+    	$rpp = Rpp::all();
+        $tema = Tema::all();
+        $subtema = Subtema::all();
+        return view('rpp.verif',compact('rpp','tema','subtema'));
+    }
+
+    public function storeVerif($id)
+    {
+ 		$datas = Rpp::FindOrFail($id);
+ 		$datas->verifikasi = 1;
+ 		$datas->save();
+ 		return redirect('/verifRpp')->with('success', 'Data telah berhasil diedit');
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -107,11 +123,12 @@ public function index()
      */
     public function edit($id)
     {
-        $sub_tema = Subtema::all();
+    	$tema = Tema::all();
+        $subtema = Subtema::all();
         $rpp = Rpp::findOrFail($id);
         $dataMapel = MataPelajaran::all();
         $kompetensi_inti = KompetensiInti::all();
-        return view('rpp.editRpp', compact('rpp','sub_tema','dataMapel','kompetensi_inti'));
+        return view('rpp.editRpp', compact('rpp','tema','subtema','dataMapel','kompetensi_inti'));
     }
 
     /**
@@ -135,8 +152,7 @@ public function index()
         $datas->alokasi_waktu = $request->alokasi_waktu;
         $datas->kompetensi_inti = $request->kompetensi_inti;
         $datas->muatan = json_encode($request->muatan); 
-        $datas->kompetensi_dasar = json_encode($request->kd);
-        $datas->indikator = "indikator";
+        $datas->kompetensi_dasar = json_encode($request->kd); 
         $datas->tujuan = $request->tujuan;
         $datas->materi = $request->materi;
         $datas->pendekatan_metode = $request->pendekatan_metode;
@@ -324,6 +340,7 @@ public function index()
 	        $section->addTextBreak();
 
             $section->addListItem('KOMPETENSI DASAR DAN INDIKATOR' ,0, 'r2Style', $listHuruf); 
+            $section->addListItemRun(0, 'r2Style', $listHuruf); 
 
 
 
@@ -342,6 +359,7 @@ public function index()
 								$table2->addCell()->addText('Kompetensi','r2Style');
 								$table2->addCell()->addText('Indikator','r2Style');
 								$data =  json_decode($rpp->kompetensi_dasar); 
+								$indikatorKosong=true;
                                 $komdas = KompetensiDasar::all(); 
                                 foreach ($data as $key => $value){
                                 	if ($muatan == $key ){
@@ -353,19 +371,24 @@ public function index()
                                                 foreach($komdas as $kd1){
                                                 	if($kd1->kelas == $rpp->kelas)
                                                     {
-                                                    	if($mapel->id == $kd1->mataPelajaran){
-                                                    		
+
+                                                    	if($mapel->id == $kd1->mataPelajaran){  
                                                     		if(substr($kd1->indikator,0,3) == substr($kd,0,3)){
                                                     			$table2->addCell()->addText($kd1->indikator);
+                                                    			$indikatorKosong=false;
                                                     		}  
-
+                                                    		
                                                     	} 
                                                             
-                                                    }
+                                                    } 
                                                 }
+                                                if($indikatorKosong==true){
+				                                	$table2->addCell()->addText('Data kosong');
+				                                } 
                                         }
                                     }    
-                                }                
+                                }    
+           
                             } 
                             
  			
@@ -435,10 +458,10 @@ public function index()
 		// Saving the document as OOXML file...
 		$objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
 		try {
-            $objWriter->save(storage_path('helloWorld.docx'));
+            $objWriter->save(storage_path('Data RPP.docx'));
     	} catch (Exception $e) {
     	
     	}
-        return response()->download(storage_path('helloWorld.docx'));
+        return response()->download(storage_path('Data RPP.docx'));
  	}
 }

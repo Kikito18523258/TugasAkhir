@@ -59,23 +59,23 @@ input[type=number] {
         <div class="form-group row">
             <label class="col-sm-2 col-form-label">Tema </label>
             <div class="col-sm-8">
-             <select class="form-control" name="tema"> 
-                 @for($i=1;$i<10;$i++)
-                 <option value="{{$i}}">Tema {{$i}}</option>
-                 @endfor
+             <select class="form-control" name="tema" id="tema-dropdown"> 
+                <option value="">
+                    Pilih Tema :
+                </option>
+                 @foreach($tema as $t)
+                 <option value="{{$t->id}}">{{$t->judul_tema}}</option>
+                 @endforeach
              </select>
              </div>
         </div>
 
         <div class="form-group row">
-            <label class="col-sm-2 col-form-label">Subtema </label>
-            <div class="col-sm-8">
-             <select class="form-control" name="sub_tema">
-                @foreach($sub_tema as $s) 
-                 <option value="{{$s->id}}">{{$s->judul}}</option>
-                 @endforeach  
-             </select>
-             </div>
+            <label class="col-sm-2 col-form-label"> Subtema</label>
+                <div class="col-sm-8">
+                    <select class="form-control" name="sub_tema" id="subtema-dropdown"> 
+                </select>
+            </div>
         </div>
 
         <div class="form-group row">
@@ -231,6 +231,27 @@ input[type=number] {
     </form>
 </div> 
 <script>
+    $(document).ready(function () {
+        $('#tema-dropdown').on('change', function () { 
+            var idSubTema = this.value;
+            $("#subtema-dropdown").html('');
+            $.ajax({
+                url: "{{url('rpp/showSubTema')}}",
+                type: "POST",
+                data: {
+                    id: idSubTema,
+                    _token: '{{csrf_token()}}'
+                },
+                dataType: 'json',
+                success: function (response) { 
+                    $.each(response.subtema, function (key, value) {
+                        $("#subtema-dropdown").append('<option class="form-control" value="'+value.id+'"><label class="px-2">'+value.judul+ '</option>');
+                    });
+                }
+            }); 
+        });
+    });
+
 
     function checkData(i){
         $("#tt").html('<label>Kompetensi Dasar</label>');

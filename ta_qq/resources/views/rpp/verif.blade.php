@@ -8,8 +8,7 @@
     @endif    
             <div class="d-sm-flex align-items-center justify-content-between mb-4">
                 <h1 class="h3 mb-0 text-gray-800">RPP</h1>
-                <a href="/rpp/create" class="d-none d-sm-inline-block btn btn-sm shadow-sm" style="background: #eb6440; color: white;"><i
-                        class="fas fa-book fa-sm text-white-50"></i> Tambah Data</a>      
+                  
             </div>
             <div>
                 <table class="table">
@@ -19,14 +18,13 @@
                             <th width="30%">Tema</th>
                             <th width="25%">Subtema</th> 
                             <th width="15%">Pembelajaran ke</th> 
-                            <th width="10%">Status</th> 
-                            <th width="25%">Tindakan</th>
+                            <th width="10%">Status</th>  
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($rpp as $rppList)
                         <tr>
-                            <td>{{$loop->iteration}}</td> 
+                    <td>{{$loop->iteration}}</td> 
                             <td>
                                 @foreach($tema as $t)
                                 @if($rppList->tema== $t->id)
@@ -45,20 +43,15 @@
                             <td>{{$rppList->pembelajaran_ke}}</td>
                             <td>
                                 @if($rppList->verifikasi==0)
-                                <b style="color:red">Belum Terverifikasi</b>
+                                <form method="post" action="/verifRpp/{{$rppList->id_rpp}}">
+                                    @csrf
+                                    @method('POST') 
+                                    <button type="submit" class="btn btn-primary btn-sm" onclick="return confirm('Anda yakin ingin menghapus?')">Verifikasi</button>
+                                </form>
                                 @elseif($rppList->verifikasi==1)
                                 <b style="color:green">Terverifikasi</b>
                                 @endif
-                            </td>
-                            <td>
-                                <form method="post" action="{{ route('rpp.destroy',$rppList->id_rpp)}}">
-                                    @csrf
-                                    @method('DELETE')
-                                    <a class="btn btn-secondary btn-sm" href="rpp/{{$rppList->id_rpp}}/viewRpp"><i class="fas fa-fw fa-eye"></i></a> 
-                                    <a class="btn btn-info btn-sm" href="rpp/{{$rppList->id_rpp}}/edit"><i class="fas fa-fw fa-pen"></i></a> 
-                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Anda yakin ingin menghapus?')"><i class="fas fa-fw fa-trash"></i></button>
-                                </form>
-                            </td>
+                            </td> 
                         </tr>
                         @endforeach
                     </tbody>

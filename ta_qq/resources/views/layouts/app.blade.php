@@ -124,6 +124,9 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Fitur :</h6>
                         <a class="collapse-item" href="/rpp">Lihat</a> 
+                        @if(Auth::user()->role!=0) 
+                        <a class="collapse-item" href="verifRpp">Verifikasi</a> 
+                        @endif
                     </div>
                 </div>
             </li>   
