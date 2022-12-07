@@ -46,7 +46,7 @@ Route::resource('/rpp','rppController');
 Route::post('rpp/showKD', 'rppController@showKD');
 Route::post('rpp/showSubTema', 'rppController@showSubTema');
 Route::get('/rpp/{id_rpp}/viewRpp', 'rppController@viewRpp');
-Route::get('/rpp/{id_rpp}/download','rppController@wordExport');
+Route::get('/rpp/{id_rpp}/download','rppController@wordExport2');
 
 //Evaluasi
 //Route::resource('/evaluasi','evaluasiController');

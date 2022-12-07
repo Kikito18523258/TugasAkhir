@@ -35,12 +35,12 @@ use App\KompetensiDasar;
                         <tr>
                             <td>Tema</td>
                             <td> : </td>
-                            <td>{{$rpp->tema}}</td>
+                            <td>{{$findTema->judul_tema}}</td>
                         </tr>
                         <tr>
                             <td>Subtema</td>
                             <td> : </td>
-                            <td>{{$rpp->sub_tema}}</td>
+                            <td>{{$findSubtema->judul}}</td>
                         </tr>
                         <tr>
                             <td>Muatan Terpadu</td>
