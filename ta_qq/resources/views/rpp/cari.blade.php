@@ -29,23 +29,43 @@
                   </div>
                   <button type="submit" class="btn btn-primary mb-2">Cari</button>
                 </form>
-                
-                @if($rpp!=null)
-                <table class="table" style="width:50%">
+
+                <br>
+                <table style="font-weight: bold;">
+                    <tr>
+                        <td width="30%">
+                            Judul Tema
+                        </td>
+
+                        <td>
+                            : {{$judultema->judul_tema}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="30%">
+                            Judul Subtema
+                        </td>
+                        <td>
+                            : {{$judulsubtema->judul}}
+                        </td>
+                    </tr>
+                </table>
+
+
+                <table class="table" style="width:75%">
                     <thead class="thead-light">
                         <tr>
                             <th width="5%">No</th>
-                            <th width="10%">Pembelajaran ke</th> 
+                            <th width="15%">Pembelajaran ke</th> 
                             <th width="10%">Status</th> 
                             <th width="10%">Tindakan</th>
                         </tr>
                     </thead>
                     <tbody>
-                                   
                         @foreach($rpp as $rppList)
                         <tr>
-                            <!-- <td>{{$loop->iteration}}</td> 
-                            <td>
+                            <td>{{$loop->iteration}}</td> 
+                            <!-- <td>
                                 @foreach($tema as $t)
                                 @if($rppList->tema== $t->id)
                                     {{$t->judul_tema}}
@@ -78,10 +98,10 @@
                                 </form>
                             </td>
                         </tr>
-                        @endforeach  
+                        @endforeach
                     </tbody>
                 </table>
-                @endif
+ 
             </div>
 </div>
 

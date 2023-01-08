@@ -57,6 +57,7 @@
                 Menu
             </div>
 
+            @if(Auth::user()->role!=1)
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
                     aria-expanded="true" aria-controls="collapseUtilities">
@@ -123,10 +124,13 @@
                 <div id="rpp" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Fitur :</h6>
-                        <a class="collapse-item" href="/rpp">Lihat</a> 
-                        @if(Auth::user()->role!=0) 
-                        <a class="collapse-item" href="verifRpp">Verifikasi</a> 
-                        @endif
+                        <a class="collapse-item" href="/rppkls1">Kelas 1</a>
+                        <a class="collapse-item" href="/rppkls2">Kelas 2</a>
+                        <a class="collapse-item" href="/rppkls3">Kelas 3</a>
+                        <a class="collapse-item" href="/rppkls4">Kelas 4</a>
+                        <a class="collapse-item" href="/rppkls5">Kelas 5</a>
+                        <a class="collapse-item" href="/rpp">Kelas 6</a> 
+                        
                     </div>
                 </div>
             </li>   
@@ -143,6 +147,20 @@
                     </div>
                 </div>
             </li> 
+            @endif
+
+            @if(Auth::user()->role!=0)
+            <li class="nav-item">
+
+                <a href="verifRpp" class="nav-link collapsed"
+                    aria-expanded="true" aria-controls="collapseTwo">
+                    <i class="fas fa-fw fa-edit"></i>
+                    <span>Verifikasi</span>
+                </a>
+                
+            </li> 
+            @endif
+
             <div class="text-center d-none d-md-inline">
                 <button class="rounded-circle border-0" id="sidebarToggle"></button>
             </div>

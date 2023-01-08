@@ -11,6 +11,25 @@
                   
             </div>
             <div>
+
+            <form class="form-inline" method="GET" action="/rpp/cariEvaluasi">
+
+                  <div class="form-group mb-2">
+                    <select class="form-control" id="tema-dropdown" name="tema">
+                        <option>Pilih Tema</option>
+                        @foreach($tema as $t)
+                            <option value="{{$t->id}}">{{$t->judul_tema}}</option>
+                        @endforeach
+                    </select>
+                  </div>
+                  <div class="form-group mx-sm-3 mb-2"> 
+                    <select class="form-control" id="subtema-dropdown" name="subtema">
+                        <option>Pilih Subtema</option>
+                    </select>
+                  </div>
+                  <button type="submit" class="btn btn-primary mb-2">Cari</button>
+            </form>
+
                 <table class="table">
                     <thead class="thead-light">
                         <tr>
@@ -18,7 +37,8 @@
                             <th width="30%">Tema</th>
                             <th width="25%">Subtema</th> 
                             <th width="15%">Pembelajaran ke</th> 
-                            <th width="10%">Status</th>  
+                            <th width="10%">Status</th>
+                            <th width="10%">Tindakan</th>  
                         </tr>
                     </thead>
                     <tbody>
@@ -32,7 +52,6 @@
                                 @endif
                                 @endforeach
                             </td>
-
                             <td>
                                 @foreach($subtema as $st)
                                 @if($rppList->sub_tema== $st->id)
@@ -46,12 +65,19 @@
                                 <form method="post" action="/verifRpp/{{$rppList->id_rpp}}">
                                     @csrf
                                     @method('POST') 
-                                    <button type="submit" class="btn btn-primary btn-sm" onclick="return confirm('Anda yakin ingin menghapus?')">Verifikasi</button>
+                                    <button type="submit" class="btn btn-primary btn-sm" onclick="return confirm('Anda yakin ingin memverifikasi?')">Verifikasi</button>
                                 </form>
                                 @elseif($rppList->verifikasi==1)
                                 <b style="color:green">Terverifikasi</b>
                                 @endif
                             </td> 
+                            <td>
+                                <form method="post" action="{{ route('rpp.destroy',$rppList->id_rpp)}}">
+                                    @csrf
+                                    @method('DELETE')
+                                    <a class="btn btn-secondary btn-sm" href="/rpp/{{$rppList->id_rpp}}/viewRpp"><i class="fas fa-fw fa-eye"></i></a> 
+                                </form>
+                            </td>
                         </tr>
                         @endforeach
                     </tbody>
@@ -59,4 +85,27 @@
  
             </div>
 </div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#tema-dropdown').on('change', function () { 
+            var idSubTema = this.value;
+            $("#subtema-dropdown").html('');
+            $.ajax({
+                url: "{{url('rpp/showSubTemaEval')}}",
+                type: "POST",
+                data: {
+                    id: idSubTema,
+                    _token: '{{csrf_token()}}'
+                },
+                dataType: 'json',
+                success: function (response) { 
+                    $.each(response.subtema, function (key, value) {
+                        $("#subtema-dropdown").append('<option class="form-control" value="'+value.id+'"><label class="px-2">'+value.judul+ '</option>');
+                    });
+                }
+            }); 
+        });
+    });
+</script>
 @endsection

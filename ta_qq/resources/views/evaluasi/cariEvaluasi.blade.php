@@ -1,3 +1,7 @@
+
+@php
+use App\Evaluasi;
+@endphp
 @extends('layouts.app')
 @section('content')
 <div style="margin: 3%;">
@@ -7,12 +11,11 @@
         </div>
     @endif    
             <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                <h1 class="h3 mb-0 text-gray-800">RPP</h1>
-                <a href="/rpp/create" class="d-none d-sm-inline-block btn btn-sm shadow-sm" style="background: #eb6440; color: white;"><i
-                        class="fas fa-book fa-sm text-white-50"></i> Tambah Data</a>      
+                <h1 class="h3 mb-0 text-gray-800">Evaluasi</h1>  
             </div>
             <div>
-                <form class="form-inline" method="GET" action="/rpp/cari">
+                
+                <form class="form-inline" method="GET" action="/evaluasi/cari">
 
                   <div class="form-group mb-2">
                     <select class="form-control" id="tema-dropdown" name="tema">
@@ -29,23 +32,24 @@
                   </div>
                   <button type="submit" class="btn btn-primary mb-2">Cari</button>
                 </form>
-                
-                @if($rpp!=null)
-                <table class="table" style="width:50%">
+
+                <table border="1" class="table" style="width:100%">
                     <thead class="thead-light">
                         <tr>
                             <th width="5%">No</th>
                             <th width="10%">Pembelajaran ke</th> 
+                            <th width="15%">Masalah</th>
+                            <th width="15%">Ide Baru</th>
+                            <th width="15%">Momen Spesial</th>
                             <th width="10%">Status</th> 
-                            <th width="10%">Tindakan</th>
+                            <th width="7%">Tindakan</th>
                         </tr>
                     </thead>
                     <tbody>
-                                   
                         @foreach($rpp as $rppList)
                         <tr>
-                            <!-- <td>{{$loop->iteration}}</td> 
-                            <td>
+                            <td>{{$loop->iteration}}</td> 
+                            <!-- <td>
                                 @foreach($tema as $t)
                                 @if($rppList->tema== $t->id)
                                     {{$t->judul_tema}}
@@ -60,28 +64,61 @@
                                 @endif
                                 @endforeach
                             </td> -->
+
                             <td>{{$rppList->pembelajaran_ke}}</td>
-                            <td>
-                                @if($rppList->verifikasi==0)
-                                <b style="color:red">Belum Terverifikasi</b>
-                                @elseif($rppList->verifikasi==1)
-                                <b style="color:green">Terverifikasi</b>
+                            @php
+                            $evaluasiCari = Evaluasi::all();
+                            $dataKosong = true;
+                            @endphp 
+
+                            <!-- Untuk mendeteksi Kolom kosong -->
+                            @foreach($evaluasiCari as $es)  
+                                @if($es->id_rpp == $rppList->id_rpp && $es->pembelajaran_ke == $rppList->pembelajaran_ke)
+                                {{$dataKosong = false}} 
+                                @endif 
+                            @endforeach
+                            
+                            <!-- Untuk menampilkan data apakah kosong atau tidak -->
+                            @foreach($evaluasiCari as $es)  
+                                @if($dataKosong == false)
+                                    @if($es->id_rpp == $rppList->id_rpp && $es->pembelajaran_ke == $rppList->pembelajaran_ke)
+                                    <td>{{$es->masalah}}</td> 
+                                    <td>{{$es->ide_baru}}</td> 
+                                    <td>{{$es->momen_spesial}}</td>  
+                                    @break
+                                    @endif
+                                @else
+                                    <td>Belum ada laporan</td> 
+                                    <td>Belum ada laporan</td> 
+                                    <td>Belum ada laporan</td> 
+                                @break
                                 @endif
-                            </td>
+                            @endforeach
                             <td>
+                                @foreach($evaluasi as $e)
+                                @if($e->id_rpp==$rppList->id_rpp)  
+                                    @if($e->status==1)
+                                        Terlaksana
+                                    @elseif($e->status==0)
+                                        Tidak Terlaksana
+                                    @endif
+                                @endif
+                                @endforeach
+                            </td>
+
+                            <td align="center">
                                 <form method="post" action="{{ route('rpp.destroy',$rppList->id_rpp)}}">
                                     @csrf
                                     @method('DELETE')
-                                    <a class="btn btn-secondary btn-sm" href="/rpp/{{$rppList->id_rpp}}/viewRpp"><i class="fas fa-fw fa-eye"></i></a> 
-                                    <a class="btn btn-info btn-sm" href="/rpp/{{$rppList->id_rpp}}/edit"><i class="fas fa-fw fa-pen"></i></a> 
-                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Anda yakin ingin menghapus?')"><i class="fas fa-fw fa-trash"></i></button>
+                                    <a class="btn btn-info btn-sm" href="/evaluasi/{{$rppList->id_rpp}}"><i class="fas fa-fw fa-pen"></i></a> 
+                                    <!-- <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Anda yakin ingin menghapus?')"><i class="fas fa-fw fa-trash"></i></button> -->
                                 </form>
                             </td>
                         </tr>
-                        @endforeach  
+                        @endforeach
                     </tbody>
                 </table>
-                @endif
+ 
             </div>
 </div>
 
@@ -91,7 +128,7 @@
             var idSubTema = this.value;
             $("#subtema-dropdown").html('');
             $.ajax({
-                url: "{{url('rpp/showSubTema')}}",
+                url: "{{url('evaluasi/showSubTema')}}",
                 type: "POST",
                 data: {
                     id: idSubTema,

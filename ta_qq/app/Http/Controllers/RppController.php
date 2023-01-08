@@ -15,7 +15,7 @@ class RppController extends Controller
 {
 	public function index()
     {
-    	$rpp = Rpp::all();
+    	$rpp = null;
         $tema = Tema::all();
         $subtema = Subtema::all();
         return view('rpp.index',compact('rpp','tema','subtema'));
@@ -29,7 +29,7 @@ class RppController extends Controller
         $subtema = Subtema::all();
         return view('rpp.verif',compact('rpp','tema','subtema'));
     }
-
+    
     public function storeVerif($id)
     {
  		$datas = Rpp::FindOrFail($id);
@@ -105,13 +105,36 @@ class RppController extends Controller
         //
     }
 
+    public function cari(Request $request)
+    {
+        $tema = $request->tema;
+        $subtema = $request->subtema;
+        $judultema = Tema::findOrFail($tema);   
+        $judulsubtema = Subtema::findOrFail($subtema);
+
+        $rpp = Rpp::where([['tema',$tema],['sub_tema',$subtema]])->get();
+        $tema = Tema::all();
+        $subtema = Subtema::all();
+        return view('rpp.cari',compact('rpp','tema','subtema','judultema','judulsubtema'));
+    }
+
+    public function cariEvaluasi(Request $request)
+    {
+        $tema = $request->tema;
+        $subtema = $request->subtema;
+
+        $rpp = Rpp::where([['tema',$tema],['sub_tema',$subtema]])->get();
+        $tema = Tema::all();
+        $subtema = Subtema::all();
+        return view('rpp.verif',compact('rpp','tema','subtema'));
+    }
+
 	public function viewRpp($id)
     {
     	$rpp = Rpp::findOrFail($id);
         $komInti = KompetensiInti::all();
         $findTema = Tema::findOrFail($rpp->tema);
   		$findSubtema = Subtema::where("id_tema",$findTema->id)->first();
-    	// $mapel = MataPelajaran::findOrFail($rpp->muatan);
         return view('rpp.viewRpp',compact('rpp','komInti','findTema','findSubtema'));
     }
 
@@ -199,57 +222,12 @@ class RppController extends Controller
 
     }
 
-    public function wordExport(Request $request,$id)
-    {
-        $rpp = Rpp::findOrFail($id); 
-        $komInti = KompetensiInti::all();
-        $muatan = null;
-        $kompetensi_inti = null;
-        $data =  json_decode($rpp->muatan); 
-        $next =  json_decode($rpp->muatan);
-        foreach ($data as $value)
-        {   
-            $mapel = MataPelajaran::findOrFail($value);
-            $muatan .= $mapel->nama;
-            if (next($next )) {
-                $muatan.= ','; 
-            }
-        }
+    public function showSubTemaEval(Request $request) 
+    { 
+        // dd($request->id);
+        $data['subtema'] = Subtema::where("id_tema",$request->id)->get(["judul", "id"]);     
+        return response()->json($data);
 
-        foreach($komInti as $ki){
-            $kompetensi_inti.= $ki->judul. "\r\n";
-        }
-
-        //ddd($kompetensi_inti);
-        $templateProcessor = new TemplateProcessor('word/template.docx');
-        $templateProcessor->setValue('satuan_pendidikan', $rpp->satuan_pendidikan);
-        $templateProcessor->setValue('kelas', $rpp->kelas);
-        $templateProcessor->setValue('semester', $rpp->semester);
-        $templateProcessor->setValue('tahun_ajaran', $rpp->tahun_ajaran);
-        $templateProcessor->setValue('tema', $rpp->tema);
-        $templateProcessor->setValue('muatan', $muatan);
-        $templateProcessor->setValue('sub_tema', $rpp->sub_tema);
-        $templateProcessor->setValue('pembelajaran_ke', $rpp->pembelajaran_ke);
-        $templateProcessor->setValue('alokasi_waktu', $rpp->alokasi_waktu);
-        $templateProcessor->setValue('kompetensi_inti', $kompetensi_inti);
-        $templateProcessor->setValue('kompetensi_dasar', $rpp->kompetensi_dasar);
-        $templateProcessor->setValue('indikator', $rpp->indikator);
-        $templateProcessor->setValue('tujuan', $rpp->tujuan);
-        $templateProcessor->setValue('materi', $rpp->materi);
-        $templateProcessor->setValue('pendekatan_metode', $rpp->pendekatan_metode);
-        $templateProcessor->setValue('kegiatan_pendahuluan', $rpp->kegiatan_pendahuluan);
-        $templateProcessor->setValue('waktu_pendahuluan', $rpp->waktu_pendahuluan);
-        $templateProcessor->setValue('kegiatan_inti', $rpp->kegiatan_inti);
-        $templateProcessor->setValue('waktu_inti', $rpp->waktu_inti);
-        $templateProcessor->setValue('kegiatan_penutup', $rpp->kegiatan_penutup);
-        $templateProcessor->setValue('waktu_penutup', $rpp->waktu_penutup);
-        $templateProcessor->setValue('penilaian', $rpp->penilaian);
-        $templateProcessor->setValue('remediasi_pengayaan', $rpp->remediasi_pengayaan);
-        $templateProcessor->setValue('sumber_media', $rpp->sumber_media);
-
-        $fileName = $rpp->id_rpp.' '.date('h-i-s') ;
-        $templateProcessor->saveAs($fileName. '.docx');
-        return response()->download($fileName . '.docx')->deleteFileAfterSend(true);
     }
  
   	public function wordExport2($id){

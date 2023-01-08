@@ -35,10 +35,10 @@
 
 				        <div class="form-group row">
 				             <label class="col-sm-2 col-form-label">Status</label>
-				                 <div class="col-sm-8">
-				                     <input type="radio" name="status" value="1"> Terlaksana 
-				                     <br>
+				                 <div class="col-sm-8">  
+				                     <input type="radio" name="status" value="1"> Terlaksana <br>
 				                     <input type="radio" name="status" value="0"> Tidak Terlaksana
+				                     <br> 
 				                 </div>
 				        </div>
 

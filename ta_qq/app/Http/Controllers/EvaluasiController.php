@@ -19,7 +19,7 @@ class EvaluasiController extends Controller
      */
     public function index()
     {
-        $rpp = Rpp::all();
+        $rpp = null; 
         $tema = Tema::all();
         $subtema = Subtema::all();
         $evaluasi = Evaluasi::all();
@@ -91,9 +91,25 @@ class EvaluasiController extends Controller
         //
     }
 
+    public function cariEvaluasi(Request $request)
+    {
+        $tema = $request->tema;
+        $subtema = $request->subtema;
+        
+
+        $rpp = Rpp::where([['tema',$tema],['sub_tema',$subtema]])->get(); 
+        // ddd($rpp2);
+
+        $tema = Tema::all();
+        $subtema = Subtema::all();
+        $evaluasi = Evaluasi::all(); 
+        
+        return view('evaluasi.cariEvaluasi',compact('rpp','tema','subtema','evaluasi'));
+    }
+
     public function viewEvaluasi($id)
     {
-        $eval = Evaluasi::findOrFail($id);
+        $eval = Evaluasi::where('id_rpp',$id)->first();
         return view('evaluasi.viewEvaluasi',compact('eval'));
     }
 
@@ -129,5 +145,13 @@ class EvaluasiController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function showSubTema(Request $request) 
+    { 
+        // dd($request->id);
+        $data['subtema'] = Subtema::where("id_tema",$request->id)->get(["judul", "id"]);     
+        return response()->json($data);
+
     }
 }
