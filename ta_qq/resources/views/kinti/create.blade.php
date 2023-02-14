@@ -20,7 +20,7 @@ input[type=number] {
         <div class="form-group row">
             <label class="col-sm-2 col-form-label">Judul </label>
             <div class="col-sm-8">
-              <textarea name="judul" class="form-control"></textarea>
+              <textarea name="judul" class="form-control" required></textarea>
              </div>
         </div>
         <div class="form-group row">

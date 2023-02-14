@@ -9,7 +9,7 @@
                         <input type="hidden" value="{{$findID->kelas}}" name="kelas"> 
                         <div class="form-group">
                                 <label for="fname">Kode Kompetensi Dasar:</label>
-                                <input type="text" class="form-control" value="{{$findID->kodeKD}}"  name="kodeKD" >
+                                <input type="text" class="form-control" value="{{$findID->kodeKD}}"  name="kodeKD" required >
                                 <div class="valid-feedback">Valid</div>
                                 <div class="invalid-feedback">
                                     Please fill this field
@@ -17,7 +17,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="lname">Kompetensi:</label>
-                                <input type="text" class="form-control" value="{{$findID->kompetensiDasar}}" name="kompetensiDasar" >
+                                <input type="text" class="form-control" value="{{$findID->kompetensiDasar}}" name="kompetensiDasar" required>
                                 <div class="valid-feedback">Valid</div>
                                 <div class="invalid-feedback">
                                     Please fill this field
@@ -25,7 +25,7 @@
                             </div>
                             <div class="form-group" style="width: 80%">
                                 <label for="lname">Indikator:</label>
-                                <textarea class="form-control" name="indikator">{{$findID->indikator}}
+                                <textarea required class="form-control" name="indikator">{{$findID->indikator}}
                                 </textarea>
                                 <div class="valid-feedback">Valid</div>
                                 <div class="invalid-feedback">

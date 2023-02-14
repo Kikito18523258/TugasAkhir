@@ -128,21 +128,21 @@ input[type=number] {
         <div class="form-group row">
             <label class="col-sm-2 col-form-label">Tujuan</label>
             <div class="col-sm-8"> 
-                <textarea class="form-control" name="tujuan">{{$rpp->tujuan}}</textarea>
+                <textarea class="form-control" name="tujuan" id="tujuan">{{$rpp->tujuan}}</textarea>
             </div> 
         </div>
 
         <div class="form-group row">
             <label class="col-sm-2 col-form-label">Materi</label>
             <div class="col-sm-8"> 
-                <textarea class="form-control" name="materi">{{$rpp->materi}}</textarea>
+                <textarea class="form-control" name="materi" id="materi">{{$rpp->materi}}</textarea>
             </div> 
         </div>
 
         <div class="form-group row">
             <label class="col-sm-2 col-form-label">Pendekatan & Metode</label>
             <div class="col-sm-8"> 
-                <textarea class="form-control" name="pendekatan_metode">{{$rpp->pendekatan_metode}}</textarea>
+                <textarea class="form-control" name="pendekatan_metode" id="pendekatan">{{$rpp->pendekatan_metode}}</textarea>
             </div> 
         </div>
         <br>
@@ -156,7 +156,7 @@ input[type=number] {
         <div class="form-group row">
             <label class="col-sm-2 col-form-label">Deskripsi Kegiatan</label>
             <div class="col-sm-8"> 
-                <textarea class="form-control" name="kegiatan_pendahuluan">{{$rpp->kegiatan_pendahuluan}}</textarea>
+                <textarea class="form-control" name="kegiatan_pendahuluan" id="pendahuluan">{{$rpp->kegiatan_pendahuluan}}</textarea>
             </div> 
         </div>
 
@@ -174,7 +174,7 @@ input[type=number] {
         <div class="form-group row">
             <label class="col-sm-2 col-form-label">Deskripsi Kegiatan</label>
             <div class="col-sm-8"> 
-                <textarea class="form-control" name="kegiatan_inti">{{$rpp->kegiatan_inti}}</textarea>
+                <textarea class="form-control" name="kegiatan_inti" id="inti">{{$rpp->kegiatan_inti}}</textarea>
             </div> 
         </div>
 
@@ -193,7 +193,7 @@ input[type=number] {
         <div class="form-group row">
             <label class="col-sm-2 col-form-label">Deskripsi Kegiatan</label>
             <div class="col-sm-8"> 
-                <textarea class="form-control" name="kegiatan_penutup">{{$rpp->kegiatan_penutup}}</textarea>
+                <textarea class="form-control" name="kegiatan_penutup" id="penutup">{{$rpp->kegiatan_penutup}}</textarea>
             </div> 
         </div>
 
@@ -207,21 +207,21 @@ input[type=number] {
         <div class="form-group row">
             <label class="col-sm-2 col-form-label">Penilaian</label>
             <div class="col-sm-8"> 
-                <textarea class="form-control" name="penilaian">{{$rpp->penilaian}}</textarea>
+                <textarea class="form-control" name="penilaian" id="penilaian">{{$rpp->penilaian}}</textarea>
             </div> 
         </div>
 
         <div class="form-group row">
             <label class="col-sm-2 col-form-label">Remediasi & Pengayaan</label>
             <div class="col-sm-8"> 
-                <textarea class="form-control" name="remediasi_pengayaan">{{$rpp->remediasi_pengayaan}}</textarea>
+                <textarea class="form-control" name="remediasi_pengayaan" id="remediasi">{{$rpp->remediasi_pengayaan}}</textarea>
             </div> 
         </div>
 
         <div class="form-group row">
             <label class="col-sm-2 col-form-label">Sumber & Media</label>
             <div class="col-sm-8"> 
-                <textarea class="form-control" name="sumber_media">{{$rpp->sumber_media}}</textarea>
+                <textarea class="form-control" name="sumber_media" id="sumber">{{$rpp->sumber_media}}</textarea>
             </div> 
         </div>
 
@@ -230,6 +230,7 @@ input[type=number] {
         </button>
     </form>
 </div> 
+
 <script>
     $(document).ready(function () {
         $('#tema-dropdown').on('change', function () { 
@@ -281,5 +282,115 @@ input[type=number] {
 
     }
 </script>
+
+<!-- <script src="{{ asset('ckeditor5/ckeditor.js') }}"></script>
+
+<script>
+    ClassicEditor
+            .create( document.querySelector( '#tujuan' ), {
+                fontFamily: {
+                    options: [
+                        'default',
+                        'Ubuntu, Arial, sans-serif',
+                        'Ubuntu Mono, Courier New, Courier, monospace'
+                    ]
+                }
+
+            } )
+            .then( editor => {
+                console.log( editor );
+            } )
+            .catch( error => {
+                console.error( error );
+            } )
+</script>
+
+<script>
+    ClassicEditor
+            .create( document.querySelector( '#materi' ) )
+            .then( editor => {
+                console.log( editor );
+            } )
+            .catch( error => {
+                console.error( error );
+            } )
+</script>
+
+<script>
+    ClassicEditor
+            .create( document.querySelector( '#pendekatan' ) )
+            .then( editor => {
+                console.log( editor );
+            } )
+            .catch( error => {
+                console.error( error );
+            } )
+</script>
+
+<script>
+    ClassicEditor
+            .create( document.querySelector( '#pendahuluan' ) )
+            .then( editor => {
+                console.log( editor );
+            } )
+            .catch( error => {
+                console.error( error );
+            } )
+</script>
+
+<script>
+    ClassicEditor
+            .create( document.querySelector( '#inti' ) )
+            .then( editor => {
+                console.log( editor );
+            } )
+            .catch( error => {
+                console.error( error );
+            } )
+</script>
+
+<script>
+    ClassicEditor
+            .create( document.querySelector( '#penutup' ) )
+            .then( editor => {
+                console.log( editor );
+            } )
+            .catch( error => {
+                console.error( error );
+            } )
+</script>
+
+<script>
+    ClassicEditor
+            .create( document.querySelector( '#penilaian' ) )
+            .then( editor => {
+                console.log( editor );
+            } )
+            .catch( error => {
+                console.error( error );
+            } )
+</script>
+
+<script>
+    ClassicEditor
+            .create( document.querySelector( '#remediasi' ) )
+            .then( editor => {
+                console.log( editor );
+            } )
+            .catch( error => {
+                console.error( error );
+            } )
+</script>
+
+<script>
+    ClassicEditor
+            .create( document.querySelector( '#sumber' ) )
+            .then( editor => {
+                console.log( editor );
+            } )
+            .catch( error => {
+                console.error( error );
+            } )
+</script> -->
 
 @endsection 

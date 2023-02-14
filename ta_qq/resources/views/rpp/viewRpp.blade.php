@@ -76,7 +76,7 @@ use App\KompetensiDasar;
                     </table>
                     </p>
                     <p>
-                        <b>A.KOMPETENSI INTI</b> <br> 
+                        <b>A. KOMPETENSI INTI</b> <br> 
                         
                             <ol type="1">
                                 @foreach($komInti as $ki)
@@ -86,7 +86,7 @@ use App\KompetensiDasar;
                         
                     </p>
                     <p>
-                        <b>B.KOMPETENSI DASAR DAN INDIKATOR</b> <br>
+                        <b>B. KOMPETENSI DASAR DAN INDIKATOR</b> <br>
                         @php 
                             $data =  json_decode($rpp->muatan);
                         @endphp
@@ -138,19 +138,19 @@ use App\KompetensiDasar;
                         @endforeach
                     </p>  
                     <p>
-                        <b>C.TUJUAN </b><br>
-                        {{$rpp->tujuan}}
+                        <b>C. TUJUAN </b><br>
+                        {!! nl2br(e($rpp->tujuan))!!}
                     </ p> 
                     <p>
-                        <b>D.MATERI </b><br>
-                        {{$rpp->materi}}
+                        <b>D. MATERI </b><br>
+                        {!! nl2br(e($rpp->materi))!!}
                     </p> 
                     <p>
-                        <b>E.PENDEKATAN & METODE</b><br>
-                        {{$rpp->pendekatan_metode}}
+                        <b>E. PENDEKATAN & METODE</b><br>
+                        {!! nl2br(e($rpp->pendekatan_metode))!!}
                     </p> 
                     <p>
-                        <b>F.KEGIATAN  PEMBELAJARAN </b><br>
+                        <b>F. KEGIATAN  PEMBELAJARAN </b><br>
                         <table border="1" width="100%">
                             <tr>
                                 <th>Kegiatan</th>
@@ -159,32 +159,32 @@ use App\KompetensiDasar;
                             </tr>
                             <tr>
                                 <th>Kegiatan Pendahuluan</th>
-                                <td>{{$rpp->kegiatan_pendahuluan}}</td>
-                                <td>{{$rpp->waktu_pendahuluan}} menit</td>
+                                <td>{!! nl2br(e($rpp->kegiatan_pendahuluan))!!}</td>
+                                <td>{{ $rpp->waktu_pendahuluan }} menit</td>
                             </tr> 
                             <tr>
                                 <th>Kegiatan Inti</th>
-                                <td>{{$rpp->kegiatan_inti}}</td>
-                                <td>{{$rpp->waktu_inti}} menit</td>
+                                <td>{!! nl2br(e($rpp->kegiatan_inti))!!}</td>
+                                <td>{{ $rpp->waktu_inti }} menit</td>
                             </tr> 
                             <tr>
                                 <th>Kegiatan Penutup</th>
-                                <td>{{$rpp->kegiatan_penutup}}</td>
-                                <td>{{$rpp->waktu_penutup}} menit</td>
+                                <td>{!! nl2br(e($rpp->kegiatan_penutup))!!}</td>
+                                <td>{{ $rpp->waktu_penutup }} menit</td>
                             </tr> 
                         </table>
                     </p> 
                     <p>
-                        <b>G.PENILAIAN</b><br>
-                        {{$rpp->penilaian}}
+                        <b>G. PENILAIAN</b><br>
+                        {!! nl2br(e($rpp->penilaian))!!}
                     </p> 
                     <p>
-                        <b>H.Remedial dan Pengayaan</b><br>
-                        {{$rpp->remedial_pengayaan}}
+                        <b>H. Remediasi dan Pengayaan</b><br>
+                        {!! nl2br(e($rpp->remediasi_pengayaan))!!}
                     </p>
                     <p>
-                        <b>I.SUMBER DAN  MEDIA</b><br>
-                        {{$rpp->sumber_media}}
+                        <b>I. SUMBER DAN  MEDIA</b><br>
+                        {!! nl2br(e($rpp->sumber_media))!!}
                     </p>  
                     <br><br>
                     <br><br>

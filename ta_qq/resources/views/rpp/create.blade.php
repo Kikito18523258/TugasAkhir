@@ -26,10 +26,10 @@ input[type=number] {
         <div class="form-group row">
             <label class="col-sm-2 col-form-label">Kelas </label>
             <div class="col-sm-8">
-             <select class="form-control" name="kelas">
+             <select class="form-control" name="kelas" id="kelas-dropdown">
                 @for($i=1; $i<7; $i++)
                  <option value="{{$i}}">Kelas {{$i}}</option>
-                 @endfor
+                @endfor
              </select>
              </div>
         </div>
@@ -57,23 +57,15 @@ input[type=number] {
 
         <div class="form-group row">
             <label class="col-sm-2 col-form-label">Tema </label>
-            <div class="col-sm-8">
-             <select class="form-control" name="tema" id="tema-dropdown"> 
-                <option value="">
-                    Pilih Tema :
-                </option>
-                 @foreach($tema as $t)
-                 <option value="{{$t->id}}">{{$t->judul_tema}}</option>
-                 @endforeach
-             </select>
-             </div>
+                <div class="col-sm-8">
+                    <select class="form-control" name="tema" id="tema-dropdown" required> </select>
+                </div>
         </div>
 
         <div class="form-group row">
             <label class="col-sm-2 col-form-label"> Subtema</label>
                 <div class="col-sm-8">
-                    <select class="form-control" name="sub_tema" id="subtema-dropdown"> 
-                </select>
+                    <select class="form-control" name="sub_tema" id="subtema-dropdown" required> </select>
             </div>
         </div>
 
@@ -127,21 +119,21 @@ input[type=number] {
         <div class="form-group row">
             <label class="col-sm-2 col-form-label">Tujuan</label>
             <div class="col-sm-8"> 
-                <textarea class="form-control" name="tujuan"></textarea>
+                <textarea class="form-control" name="tujuan" id="tujuan" required></textarea>
             </div> 
         </div>
 
         <div class="form-group row">
             <label class="col-sm-2 col-form-label">Materi</label>
             <div class="col-sm-8"> 
-                <textarea class="form-control" name="materi"></textarea>
+                <textarea class="form-control" name="materi" id="materi" required></textarea>
             </div> 
         </div>
 
         <div class="form-group row">
             <label class="col-sm-2 col-form-label">Pendekatan & Metode</label>
             <div class="col-sm-8"> 
-                <textarea class="form-control" name="pendekatan_metode"></textarea>
+                <textarea class="form-control" name="pendekatan_metode" id="pendekatan" required></textarea>
             </div> 
         </div>
         <br>
@@ -155,7 +147,7 @@ input[type=number] {
         <div class="form-group row">
             <label class="col-sm-2 col-form-label">Deskripsi Kegiatan</label>
             <div class="col-sm-8"> 
-                <textarea class="form-control" name="kegiatan_pendahuluan"></textarea>
+                <textarea class="form-control" name="kegiatan_pendahuluan" id="pendahuluan" required></textarea>
             </div> 
         </div>
 
@@ -173,7 +165,7 @@ input[type=number] {
         <div class="form-group row">
             <label class="col-sm-2 col-form-label">Deskripsi Kegiatan</label>
             <div class="col-sm-8"> 
-                <textarea class="form-control" name="kegiatan_inti"></textarea>
+                <textarea class="form-control" name="kegiatan_inti" id="inti" required></textarea>
             </div> 
         </div>
 
@@ -192,7 +184,7 @@ input[type=number] {
         <div class="form-group row">
             <label class="col-sm-2 col-form-label">Deskripsi Kegiatan</label>
             <div class="col-sm-8"> 
-                <textarea class="form-control" name="kegiatan_penutup"></textarea>
+                <textarea class="form-control" name="kegiatan_penutup" id="penutup" required></textarea>
             </div> 
         </div>
 
@@ -206,21 +198,21 @@ input[type=number] {
         <div class="form-group row">
             <label class="col-sm-2 col-form-label">Penilaian</label>
             <div class="col-sm-8"> 
-                <textarea class="form-control" name="penilaian"></textarea>
+                <textarea class="form-control" name="penilaian" id="penilaian" required></textarea>
             </div> 
         </div>
 
         <div class="form-group row">
             <label class="col-sm-2 col-form-label">Remediasi & Pengayaan</label>
             <div class="col-sm-8"> 
-                <textarea class="form-control" name="remediasi_pengayaan"></textarea>
+                <textarea class="form-control" name="remediasi_pengayaan" id="remediasi" required></textarea>
             </div> 
         </div>
 
         <div class="form-group row">
             <label class="col-sm-2 col-form-label">Sumber & Media</label>
             <div class="col-sm-8"> 
-                <textarea class="form-control" name="sumber_media"></textarea>
+                <textarea class="form-control" name="sumber_media" id="sumber" required></textarea>
             </div> 
         </div>
 
@@ -230,11 +222,33 @@ input[type=number] {
     </form>
 </div> 
 
-<script>
+<script> 
+    $(document).ready(function () {
+        $('#kelas-dropdown').on('change', function () { 
+            var idTema = this.value;
+            $("#tema-dropdown").html('<option>Pilih Tema</option>');
+            $.ajax({
+                url: "{{url('rpp/showTema')}}",
+                type: "POST",
+                data: {
+                    id: idTema,
+                    _token: '{{csrf_token()}}'
+                },
+                dataType: 'json',
+                success: function (response) { 
+                    $.each(response.tema, function (key, value) {
+                        $("#tema-dropdown").append('<option class="form-control" value="'+value.id+'"><label class="px-2">'+value.judul_tema+ '</option>');
+                    });
+                    
+                }
+            }); 
+        });
+    }); 
+
     $(document).ready(function () {
         $('#tema-dropdown').on('change', function () { 
             var idSubTema = this.value;
-            $("#subtema-dropdown").html('');
+            $("#subtema-dropdown").html('<option>Pilih Subtema</option>');
             $.ajax({
                 url: "{{url('rpp/showSubTema')}}",
                 type: "POST",
@@ -280,5 +294,117 @@ input[type=number] {
 
     }
 </script>
+
+<!-- <script src="https://cdn.ckeditor.com/ckeditor5/33.0.0/classic/ckeditor.js"></script> -->
+
+<!-- <script src="{{ asset('ckeditor5/ckeditor.js') }}"></script>
+
+<script>
+    ClassicEditor
+            .create( document.querySelector( '#tujuan' ), {
+                fontFamily: {
+                    options: [
+                        'default',
+                        'Ubuntu, Arial, sans-serif',
+                        'Ubuntu Mono, Courier New, Courier, monospace'
+                    ]
+                }
+
+            } )
+            .then( editor => {
+                console.log( editor );
+            } )
+            .catch( error => {
+                console.error( error );
+            } )
+</script>
+
+<script>
+    ClassicEditor
+            .create( document.querySelector( '#materi' ) )
+            .then( editor => {
+                console.log( editor );
+            } )
+            .catch( error => {
+                console.error( error );
+            } )
+</script>
+
+<script>
+    ClassicEditor
+            .create( document.querySelector( '#pendekatan' ) )
+            .then( editor => {
+                console.log( editor );
+            } )
+            .catch( error => {
+                console.error( error );
+            } )
+</script>
+
+<script>
+    ClassicEditor
+            .create( document.querySelector( '#pendahuluan' ) )
+            .then( editor => {
+                console.log( editor );
+            } )
+            .catch( error => {
+                console.error( error );
+            } )
+</script>
+
+<script>
+    ClassicEditor
+            .create( document.querySelector( '#inti' ) )
+            .then( editor => {
+                console.log( editor );
+            } )
+            .catch( error => {
+                console.error( error );
+            } )
+</script>
+
+<script>
+    ClassicEditor
+            .create( document.querySelector( '#penutup' ) )
+            .then( editor => {
+                console.log( editor );
+            } )
+            .catch( error => {
+                console.error( error );
+            } )
+</script>
+
+<script>
+    ClassicEditor
+            .create( document.querySelector( '#penilaian' ) )
+            .then( editor => {
+                console.log( editor );
+            } )
+            .catch( error => {
+                console.error( error );
+            } )
+</script>
+
+<script>
+    ClassicEditor
+            .create( document.querySelector( '#remediasi' ) )
+            .then( editor => {
+                console.log( editor );
+            } )
+            .catch( error => {
+                console.error( error );
+            } )
+</script>
+
+<script>
+    ClassicEditor
+            .create( document.querySelector( '#sumber' ) )
+            .then( editor => {
+                console.log( editor );
+            } )
+            .catch( error => {
+                console.error( error );
+            } )
+</script> -->
 
 @endsection 

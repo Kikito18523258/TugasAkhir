@@ -17,14 +17,21 @@ use App\Evaluasi;
                 
                 <form class="form-inline" method="GET" action="/evaluasi/cari">
 
-                  <div class="form-group mb-2">
-                    <select class="form-control" id="tema-dropdown" name="tema">
-                        <option>Pilih Tema</option>
-                        @foreach($tema as $t)
-                            <option value="{{$t->id}}">{{$t->judul_tema}}</option>
-                        @endforeach
+                  <div class="form-group mx-sm-3 mb-2">
+                    <select class="form-control" id="kelas-dropdown" name="kelas">
+                        <option>Pilih Kelas</option>
+                            @foreach($kelas as $k)
+                            <option value="{{$k->id}}">{{$k->nama_kelas}}</option> 
+                            @endforeach
                     </select>
                   </div>
+
+                  <div class="form-group mb-2">
+                    <select class="form-control" id="tema-dropdown" name="tema">
+                        <option>Pilih Tema</option>  
+                    </select>
+                  </div>
+
                   <div class="form-group mx-sm-3 mb-2"> 
                     <select class="form-control" id="subtema-dropdown" name="subtema">
                         <option>Pilih Subtema</option>
@@ -33,7 +40,37 @@ use App\Evaluasi;
                   <button type="submit" class="btn btn-primary mb-2">Cari</button>
                 </form>
 
-                <table border="1" class="table" style="width:100%">
+                <br>
+                <table style="font-weight: bold;">
+                    <tr>
+                        <td width="30%">
+                            Kelas
+                        </td>
+
+                        <td>
+                            : {{$judultema->kelas}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="30%">
+                            Judul Tema
+                        </td>
+
+                        <td>
+                            : {{$judultema->judul_tema}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="30%">
+                            Judul Subtema
+                        </td>
+                        <td>
+                            : {{$judulsubtema->judul}}
+                        </td>
+                    </tr>
+                </table>
+
+                <table class="table" style="width:100%">
                     <thead class="thead-light">
                         <tr>
                             <th width="5%">No</th>
@@ -88,9 +125,9 @@ use App\Evaluasi;
                                     @break
                                     @endif
                                 @else
-                                    <td>Belum ada laporan</td> 
-                                    <td>Belum ada laporan</td> 
-                                    <td>Belum ada laporan</td> 
+                                    <td>Data Kosong</td> 
+                                    <td>Data Kosong</td> 
+                                    <td>Data Kosong</td> 
                                 @break
                                 @endif
                             @endforeach
@@ -107,9 +144,7 @@ use App\Evaluasi;
                             </td>
 
                             <td align="center">
-                                <form method="post" action="{{ route('rpp.destroy',$rppList->id_rpp)}}">
-                                    @csrf
-                                    @method('DELETE')
+                                <form method="post" action=""> 
                                     <a class="btn btn-info btn-sm" href="/evaluasi/{{$rppList->id_rpp}}"><i class="fas fa-fw fa-pen"></i></a> 
                                     <!-- <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Anda yakin ingin menghapus?')"><i class="fas fa-fw fa-trash"></i></button> -->
                                 </form>
@@ -124,20 +159,40 @@ use App\Evaluasi;
 
 <script type="text/javascript">
     $(document).ready(function () {
-        $('#tema-dropdown').on('change', function () { 
-            var idSubTema = this.value;
-            $("#subtema-dropdown").html('');
+        $('#kelas-dropdown').on('change', function () { 
+            var idTema = this.value;
+            $("#tema-dropdown").html('<option>Pilih Tema</option>');
             $.ajax({
-                url: "{{url('evaluasi/showSubTema')}}",
+                url: "{{url('rpp/showTema')}}",
                 type: "POST",
                 data: {
-                    id: idSubTema,
+                    id: idTema,
                     _token: '{{csrf_token()}}'
                 },
                 dataType: 'json',
                 success: function (response) { 
-                    $.each(response.subtema, function (key, value) {
-                        $("#subtema-dropdown").append('<option class="form-control" value="'+value.id+'"><label class="px-2">'+value.judul+ '</option>');
+                    $.each(response.tema, function (key, value) {
+                        $("#tema-dropdown").append('<option class="form-control" value="'+value.id+'"><label class="px-2">'+value.judul_tema+ '</option>');
+                    });
+                    $(document).ready(function () {
+                        $('#tema-dropdown').on('change', function () { 
+                            var idSubTema = this.value;
+                            $("#subtema-dropdown").html('<option>Pilih Subtema</option>');
+                            $.ajax({
+                                url: "{{url('rpp/showSubTema')}}",
+                                type: "POST",
+                                data: {
+                                    id: idSubTema,
+                                    _token: '{{csrf_token()}}'
+                                },
+                                dataType: 'json',
+                                success: function (response) { 
+                                    $.each(response.subtema, function (key, value) {
+                                        $("#subtema-dropdown").append('<option class="form-control" value="'+value.id+'"><label class="px-2">'+value.judul+ '</option>');
+                                    });
+                                }
+                            }); 
+                        });
                     });
                 }
             }); 

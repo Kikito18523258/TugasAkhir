@@ -43,8 +43,8 @@
 
                             <div class="col-md-6">
                                 <select id="role" class="form-control" name="role">
-                                    <option value="1">Guru</option>
-                                    <option value="2">Kepala Sekolah</option>
+                                    <option value="0">Guru</option>
+                                    <option value="1">Kepala Sekolah</option>
                                 </select> 
                             </div>
                         </div>

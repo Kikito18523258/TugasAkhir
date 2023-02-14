@@ -9,6 +9,7 @@ use App\Rpp;
 use App\Tema;
 use App\Subtema;
 use App\KompetensiInti;
+use App\Kelas;
 use PhpOffice\PhpWord\TemplateProcessor;
 
 class RppController extends Controller
@@ -18,7 +19,8 @@ class RppController extends Controller
     	$rpp = null;
         $tema = Tema::all();
         $subtema = Subtema::all();
-        return view('rpp.index',compact('rpp','tema','subtema'));
+        $kelas = Kelas::all(); 
+        return view('rpp.index',compact('rpp','tema','subtema','kelas'));
     }
     
 
@@ -27,7 +29,8 @@ class RppController extends Controller
     	$rpp = Rpp::all();
         $tema = Tema::all();
         $subtema = Subtema::all();
-        return view('rpp.verif',compact('rpp','tema','subtema'));
+        $kelas = Kelas::all();
+        return view('rpp.verif',compact('rpp','tema','subtema','kelas'));
     }
     
     public function storeVerif($id)
@@ -109,32 +112,38 @@ class RppController extends Controller
     {
         $tema = $request->tema;
         $subtema = $request->subtema;
+        $kelas = Kelas::all();
         $judultema = Tema::findOrFail($tema);   
         $judulsubtema = Subtema::findOrFail($subtema);
+        
 
         $rpp = Rpp::where([['tema',$tema],['sub_tema',$subtema]])->get();
         $tema = Tema::all();
         $subtema = Subtema::all();
-        return view('rpp.cari',compact('rpp','tema','subtema','judultema','judulsubtema'));
+        return view('rpp.cari',compact('rpp','tema','subtema','judultema','judulsubtema','kelas'));
     }
 
     public function cariEvaluasi(Request $request)
     {
         $tema = $request->tema;
         $subtema = $request->subtema;
+        $kelas = Kelas::all(); 
+
 
         $rpp = Rpp::where([['tema',$tema],['sub_tema',$subtema]])->get();
         $tema = Tema::all();
         $subtema = Subtema::all();
-        return view('rpp.verif',compact('rpp','tema','subtema'));
+        return view('rpp.verif',compact('rpp','tema','subtema','kelas'));
     }
 
 	public function viewRpp($id)
     {
     	$rpp = Rpp::findOrFail($id);
         $komInti = KompetensiInti::all();
-        $findTema = Tema::findOrFail($rpp->tema);
-  		$findSubtema = Subtema::where("id_tema",$findTema->id)->first();
+        $findTema = Tema::findOrFail($rpp->tema); 
+  		$findIDSubtema = Rpp::where("id_rpp",$id)->first();
+        $findSubtema = Subtema::where("id",$findIDSubtema->sub_tema)->first();
+        //dd($findIDSubtema);
         return view('rpp.viewRpp',compact('rpp','komInti','findTema','findSubtema'));
     }
 
@@ -214,6 +223,14 @@ class RppController extends Controller
 
     }
 
+    public function showTema(Request $request) 
+    { 
+        // dd($request->id);
+        $data['tema'] = Tema::where("kelas",$request->id)->get(["judul_tema", "id"]);     
+        return response()->json($data);
+
+    }
+
     public function showSubTema(Request $request) 
     { 
         // dd($request->id);
@@ -234,7 +251,8 @@ class RppController extends Controller
   		$komInti = KompetensiInti::all();
   		$rpp = Rpp::findOrFail($id); 
   		$findTema = Tema::findOrFail($rpp->tema);
-  		$findSubtema = Subtema::where("id_tema",$findTema->id)->first();
+  		$findIDSubtema = Rpp::where("id_rpp",$id)->first();
+        $findSubtema = Subtema::where("id",$findIDSubtema->sub_tema)->first();
   		$muatan = null; 
         $data =  json_decode($rpp->muatan); 
         $next =  json_decode($rpp->muatan);
@@ -369,11 +387,10 @@ class RppController extends Controller
            
                             } 
                             
- 			
-
             $section->addListItem('TUJUAN' ,0, 'r2Style', $listHuruf); 
             $section->addText($rpp->tujuan); 
             $section->addTextBreak();
+
             $section->addListItem('MATERI' ,0, 'r2Style', $listHuruf); 
             $section->addText($rpp->materi); 
             $section->addTextBreak();

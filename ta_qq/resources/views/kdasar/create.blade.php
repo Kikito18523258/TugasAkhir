@@ -20,13 +20,13 @@ input[type=number] {
         <div class="form-group row">
              <label class="col-sm-2 col-form-label">Kode Kompetensi Dasar</label>
                  <div class="col-sm-8">
-                     <input type="text" name="kodeKD" class="form-control" > 
+                     <input type="text" name="kodeKD" class="form-control" required> 
                  </div>
         </div>
         <div class="form-group row">
             <label class="col-sm-2 col-form-label">Judul </label>
             <div class="col-sm-8">
-              <input type="text" name="kompetensiDasar" class="form-control">
+              <input type="text" name="kompetensiDasar" class="form-control" required>
              </div>
         </div>
 
@@ -40,7 +40,7 @@ input[type=number] {
         <div class="form-group row">
             <label class="col-sm-2 col-form-label">Indikator</label>
             <div class="col-sm-8">
-              <textarea class="form-control" name="indikator"></textarea>
+              <textarea class="form-control" name="indikator" required></textarea>
              </div>
         </div>
         

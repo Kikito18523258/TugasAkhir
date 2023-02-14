@@ -9,6 +9,7 @@ use App\Rpp;
 use App\Evaluasi;
 use App\Tema;
 use App\Subtema;
+use App\Kelas;
 
 class EvaluasiController extends Controller
 {
@@ -20,10 +21,11 @@ class EvaluasiController extends Controller
     public function index()
     {
         $rpp = null; 
+        $kelas = Kelas::all(); 
         $tema = Tema::all();
         $subtema = Subtema::all();
         $evaluasi = Evaluasi::all();
-        return view('evaluasi.index',compact('rpp','tema','subtema','evaluasi'));
+        return view('evaluasi.index',compact('rpp','tema','subtema','evaluasi','kelas'));
     }
 
     public function evaluasi($id_rpp)
@@ -56,23 +58,39 @@ class EvaluasiController extends Controller
 
             'masalah' => 'required', 
             'ide_baru' => 'required',
-            'momen_spesial' => 'required', 
+            'momen_spesial' => 'required',
             'status' => 'required',
         ]);
-        $save = Evaluasi::create([
-                "masalah"=>$request->masalah,
-                "ide_baru"=>$request->ide_baru,
-                "momen_spesial"=>$request->momen_spesial,
-                "status"=>$request->status,
-                "id_rpp"=>$id_rpp, 
-            ]);
+        $datas = Evaluasi::where("id_rpp",$id_rpp)->first(); 
 
-        if($save){
-           return redirect('/evaluasi')->with('success', 'Data telah berhasil ditambah');
-        }else{
-           echo 'gagal save';
-           die;
+        if($datas==null){
+            $save = Evaluasi::create([
+                    "masalah"=>$request->masalah,
+                    "ide_baru"=>$request->ide_baru,
+                    "momen_spesial"=>$request->momen_spesial,
+                    "status"=>$request->status,
+                    "pembelajaran_ke"=>$request->pembelajaran_ke,
+                    "id_rpp"=>$id_rpp, 
+                ]);
+
+            if($save){
+               return redirect('/evaluasi')->with('success', 'Data telah berhasil ditambah');
+            }else{
+               echo 'gagal save';
+               die;
+            }
         }
+        else{
+            $datas->masalah =$request->masalah;
+            $datas->ide_baru =$request->ide_baru;
+            $datas->momen_spesial =$request->momen_spesial;
+            $datas->status =$request->status;
+            $datas->pembelajaran_ke =$request->pembelajaran_ke;
+            $datas->id_rpp =$id_rpp;
+            $datas->save();
+            return redirect('/evaluasi')->with('success', 'Data telah berhasil ditambah');
+        }
+
     }
 
     public function store(Request $request)
@@ -95,16 +113,20 @@ class EvaluasiController extends Controller
     {
         $tema = $request->tema;
         $subtema = $request->subtema;
+        $judultema = Tema::findOrFail($tema);   
+        $judulsubtema = Subtema::findOrFail($subtema); 
         
 
         $rpp = Rpp::where([['tema',$tema],['sub_tema',$subtema]])->get(); 
         // ddd($rpp2);
 
+        $kelas = Kelas::all(); 
         $tema = Tema::all();
         $subtema = Subtema::all();
-        $evaluasi = Evaluasi::all(); 
+        $evaluasi = Evaluasi::all();
         
-        return view('evaluasi.cariEvaluasi',compact('rpp','tema','subtema','evaluasi'));
+        
+        return view('evaluasi.cariEvaluasi',compact('rpp','tema','subtema','evaluasi','kelas','judultema','judulsubtema'));
     }
 
     public function viewEvaluasi($id)

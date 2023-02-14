@@ -32,7 +32,7 @@
         <ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar" style="background: #497174">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/home">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center">
                 <div class="sidebar-brand-icon rotate-n-0">
                     <i class="fas fa-home"></i>
                 </div>
@@ -57,7 +57,18 @@
                 Menu
             </div>
 
-            @if(Auth::user()->role!=1)
+            @if(Auth::user()->role==2)
+
+            <li class="nav-item">
+
+                <a href="daftarAkun" class="nav-link collapsed"
+                    aria-expanded="true" aria-controls="collapseTwo">
+                    <i class="fas fa-fw fa-edit"></i>
+                    <span>Daftar Akun</span>
+                </a>
+                
+            </li> 
+
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
                     aria-expanded="true" aria-controls="collapseUtilities">
@@ -67,40 +78,39 @@
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Fitur:</h6> 
                             <div class="dropdown">
                                 <a class="collapse-item" type="button" data-toggle="dropdown" >Kelas 1</a>
                                   <div class="dropdown-menu" >
-                                    <a href="" class="dropdown-item" type="button">Kompetensi Inti</a> 
-                                    <a href="" class="dropdown-item" type="button">Kompetensi Dasar</a> 
+                                    <a href="/kompetensiInti/1" class="dropdown-item" type="button">Kompetensi Inti</a> 
+                                    <a href="/kompetensiDasar/1" class="dropdown-item" type="button">Kompetensi Dasar</a> 
                                   </div> 
                                   </div>
                                 <div class="dropdown">
                                 <a class="collapse-item" type="button" data-toggle="dropdown" >Kelas 2</a>
                                   <div class="dropdown-menu" >
-                                    <a href="" class="dropdown-item" type="button">Kompetensi Inti</a> 
-                                    <a href="" class="dropdown-item" type="button">Kompetensi Dasar</a> 
+                                    <a href="/kompetensiInti/2" class="dropdown-item" type="button">Kompetensi Inti</a> 
+                                    <a href="/kompetensiDasar/2" class="dropdown-item" type="button">Kompetensi Dasar</a> 
                                   </div> 
                               </div>
                               <div class="dropdown">
                                 <a class="collapse-item" type="button" data-toggle="dropdown" >Kelas 3</a>
                                   <div class="dropdown-menu" >
-                                    <a href="" class="dropdown-item" type="button">Kompetensi Inti</a> 
-                                    <a href="" class="dropdown-item" type="button">Kompetensi Dasar</a> 
+                                    <a href="/kompetensiInti/3" class="dropdown-item" type="button">Kompetensi Inti</a> 
+                                    <a href="/kompetensiDasar/3" class="dropdown-item" type="button">Kompetensi Dasar</a> 
                                   </div>
                                   </div>
                                   <div class="dropdown"> 
                                 <a class="collapse-item" type="button" data-toggle="dropdown" >Kelas 4</a>
                                   <div class="dropdown-menu" >
-                                    <a href="" class="dropdown-item" type="button">Kompetensi Inti</a> 
-                                    <a href="" class="dropdown-item" type="button">Kompetensi Dasar</a> 
+                                    <a href="/kompetensiInti/4" class="dropdown-item" type="button">Kompetensi Inti</a> 
+                                    <a href="/kompetensiDasar/4" class="dropdown-item" type="button">Kompetensi Dasar</a> 
                                   </div> 
                               </div>
                               <div class="dropdown">
                                 <a class="collapse-item" type="button" data-toggle="dropdown"  >Kelas 5</a>
                                   <div class="dropdown-menu" >
-                                    <a href="" class="dropdown-item" type="button">Kompetensi Inti</a> 
-                                    <a href="" class="dropdown-item" type="button">Kompetensi Dasar</a> 
+                                    <a href="/kompetensiInti/5" class="dropdown-item" type="button">Kompetensi Inti</a> 
+                                    <a href="/kompetensiDasar/5" class="dropdown-item" type="button">Kompetensi Dasar</a> 
                                   </div> 
                               </div>
                               <div class="dropdown">
@@ -123,13 +133,7 @@
                 </a>
                 <div id="rpp" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Fitur :</h6>
-                        <a class="collapse-item" href="/rppkls1">Kelas 1</a>
-                        <a class="collapse-item" href="/rppkls2">Kelas 2</a>
-                        <a class="collapse-item" href="/rppkls3">Kelas 3</a>
-                        <a class="collapse-item" href="/rppkls4">Kelas 4</a>
-                        <a class="collapse-item" href="/rppkls5">Kelas 5</a>
-                        <a class="collapse-item" href="/rpp">Kelas 6</a> 
+                        <a class="collapse-item" href="/rpp">Lihat Data</a> 
                         
                     </div>
                 </div>
@@ -142,23 +146,125 @@
                 </a>
                 <div id="evaluasi" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Fitur :</h6>
-                        <a class="collapse-item" href="/evaluasi">Lihat</a> 
+                        <a class="collapse-item" href="/evaluasi">Lihat Data</a> 
                     </div>
                 </div>
             </li> 
-            @endif
 
-            @if(Auth::user()->role!=0)
+            @elseif(Auth::user()->role==1)
+
             <li class="nav-item">
 
-                <a href="verifRpp" class="nav-link collapsed"
+                <a href="/verifRpp" class="nav-link collapsed"  data-toggle="collapse" data-target="#verifRpp"
                     aria-expanded="true" aria-controls="collapseTwo">
                     <i class="fas fa-fw fa-edit"></i>
                     <span>Verifikasi</span>
                 </a>
+                <div id="verifRpp" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="/verifRpp">Lihat Data</a> 
+                    </div>
+                </div>
                 
             </li> 
+
+            <li class="nav-item">
+                <a href="/evaluasi" class="nav-link collapsed"  data-toggle="collapse" data-target="#evaluasi"
+                    aria-expanded="true" aria-controls="collapseTwo">
+                    <i class="fas fa-fw fa-edit"></i>
+                    <span>Evaluasi</span>
+                </a>
+                <div id="evaluasi" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="/evaluasi">Lihat Data</a> 
+                    </div>
+                </div>
+            </li> 
+
+            @elseif(Auth::user()->role==0)
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
+                    aria-expanded="true" aria-controls="collapseUtilities">
+                    <i class="fas fa-fw fa-book"></i>
+                    <span>Silabus</span>
+                </a>
+                <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
+                    data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                            <div class="dropdown">
+                                <a class="collapse-item" type="button" data-toggle="dropdown" >Kelas 1</a>
+                                  <div class="dropdown-menu" >
+                                    <a href="/kompetensiInti/1" class="dropdown-item" type="button">Kompetensi Inti</a> 
+                                    <a href="/kompetensiDasar/1" class="dropdown-item" type="button">Kompetensi Dasar</a> 
+                                  </div> 
+                                  </div>
+                                <div class="dropdown">
+                                <a class="collapse-item" type="button" data-toggle="dropdown" >Kelas 2</a>
+                                  <div class="dropdown-menu" >
+                                    <a href="/kompetensiInti/2" class="dropdown-item" type="button">Kompetensi Inti</a> 
+                                    <a href="/kompetensiDasar/2" class="dropdown-item" type="button">Kompetensi Dasar</a> 
+                                  </div> 
+                              </div>
+                              <div class="dropdown">
+                                <a class="collapse-item" type="button" data-toggle="dropdown" >Kelas 3</a>
+                                  <div class="dropdown-menu" >
+                                    <a href="/kompetensiInti/3" class="dropdown-item" type="button">Kompetensi Inti</a> 
+                                    <a href="/kompetensiDasar/3" class="dropdown-item" type="button">Kompetensi Dasar</a> 
+                                  </div>
+                                  </div>
+                                  <div class="dropdown"> 
+                                <a class="collapse-item" type="button" data-toggle="dropdown" >Kelas 4</a>
+                                  <div class="dropdown-menu" >
+                                    <a href="/kompetensiInti/4" class="dropdown-item" type="button">Kompetensi Inti</a> 
+                                    <a href="/kompetensiDasar/4" class="dropdown-item" type="button">Kompetensi Dasar</a> 
+                                  </div> 
+                              </div>
+                              <div class="dropdown">
+                                <a class="collapse-item" type="button" data-toggle="dropdown"  >Kelas 5</a>
+                                  <div class="dropdown-menu" >
+                                    <a href="/kompetensiInti/5" class="dropdown-item" type="button">Kompetensi Inti</a> 
+                                    <a href="/kompetensiDasar/5" class="dropdown-item" type="button">Kompetensi Dasar</a> 
+                                  </div> 
+                              </div>
+                              <div class="dropdown">
+                                <a class="collapse-item" type="button" data-toggle="dropdown" >Kelas 6</a>
+                                  <div class="dropdown-menu" >
+                                    <a href="/kompetensiInti/6" class="dropdown-item">Kompetensi Inti</a> 
+                                    <a href="/kompetensiDasar/6" class="dropdown-item" >Kompetensi Dasar</a> 
+                                  </div> 
+                            </div>
+                    </div>
+                </div>
+            </li>
+
+        
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#rpp"
+                    aria-expanded="true" aria-controls="collapseTwo">
+                    <i class="fas fa-fw fa-list"></i>
+                    <span>RPP</span>
+                </a>
+                <div id="rpp" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="/rpp">Lihat Data</a> 
+                        
+                    </div>
+                </div>
+            </li>   
+            <li class="nav-item">
+                <a class="nav-link collapsed"  data-toggle="collapse" data-target="#evaluasi"
+                    aria-expanded="true" aria-controls="collapseTwo">
+                    <i class="fas fa-fw fa-edit"></i>
+                    <span>Evaluasi</span>
+                </a>
+                <div id="evaluasi" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="/evaluasi">Lihat Data</a> 
+                    </div>
+                </div>
+            </li> 
+
             @endif
 
             <div class="text-center d-none d-md-inline">
